@@ -1,5 +1,9 @@
 version: '3.4'
 
+volumes:
+  vol-db-desafio: 
+    external: true
+
 services:
 #PHP Service
   php74:
@@ -29,6 +33,32 @@ services:
       - bubble
     depends_on:
       - php74
+
+#Mysql Service
+  db:
+    container_name: desafio_mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306" 
+    volumes:
+      - vol-db-desafio:/var/lib/mysql   
+    image: mysql:8.0
+    networks:
+      - bubble
+
+#Phpmyadmin Service
+  app:
+    container_name: desafio_phpmyadmin
+    restart: always
+    links:
+      - db
+    ports:
+      - 81:80
+    image: phpmyadmin:5.1
+    networks:
+      - bubble
 
 networks:
   bubble:

@@ -27,6 +27,9 @@ RUN apk add --no-cache $PHPIZE_DEPS \
     && docker-php-ext-install mysqli pdo pdo_mysql bcmath sockets
  
 # Docker non-root-user
+## definindo variáveis de ambiente
+## ARG definindo o valor no momento da construção da imagem
+## ENV recebendo o valor em tempo de execução
 ARG PUID=1000
 ENV PUID 1000
 ARG PGID=1000
