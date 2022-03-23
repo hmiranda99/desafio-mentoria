@@ -1,0 +1,64 @@
+version: '3.4'
+
+volumes:
+  vol-db-desafio: 
+    external: true
+
+services:
+#PHP Service
+  php74:
+    build:
+      context: ./docker/web
+    container_name: desafio_php74
+    tty: true
+    working_dir: /var/www/html/desafio
+    volumes:
+      - ./:/var/www/html/desafio
+    networks:
+      - bubble
+    expose:
+      - "9000"
+
+#Nginx Service
+  nginx:
+    container_name: desafio_nginx
+    image: nginx:latest
+    stop_signal: SIGQUIT
+    stop_grace_period: 90s
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 65080:80
+    networks:
+      - bubble
+    depends_on:
+      - php74
+
+#Mysql Service
+  db:
+    container_name: desafio_mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306" 
+    volumes:
+      - vol-db-desafio:/var/lib/mysql   
+    image: mysql:8.0
+    networks:
+      - bubble
+
+#Phpmyadmin Service
+  app:
+    container_name: desafio_phpmyadmin
+    restart: always
+    links:
+      - db
+    ports:
+      - 81:80
+    image: phpmyadmin:5.1
+    networks:
+      - bubble
+
+networks:
+  bubble:
