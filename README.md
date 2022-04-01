@@ -13,7 +13,7 @@
 
    <br>
 
-  [Sobre](--sobre-o-desafio) <br>
+  [Sobre](#--sobre-o-desafio) <br>
   [Skills necessárias](#-skills-necessárias) <br>
   [Modelagem de dados](#-modelagem-de-dados) <br>
   [Primeiros passos](#-primeiros-passos) <br>
