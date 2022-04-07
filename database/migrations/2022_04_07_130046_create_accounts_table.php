@@ -17,9 +17,11 @@ return new class extends Migration
             $table->increments('id');
             $table->string('number', 20)->index();
             $table->float('balance', 10, 2);
-            $table->unsignedInteger('owner_id');
-            $table->foreign('owner_id')->references('id')->on('owners')->onDelete('cascade');
-            $table->timestamps();
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->datetime('created_at')->index();
+            $table->datetime('deleted_at')->nullable()->default(null)->index();
+            $table->datetime('updated_at')->nullable()->default(null);
         });
     }
 
