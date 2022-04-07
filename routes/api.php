@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\HealthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,5 @@ use App\Http\Controllers\Api\HealthController;
 });*/
 
 Route::get('/check', [HealthController::class, 'check']);
+Route::get('/users', [UserController::class, 'list']);
+Route::post('/create-users', [UserController::class, 'create']);
