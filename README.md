@@ -45,10 +45,8 @@ Para esse desafio foi desenvolvida uma API escalável que tem como objetivo real
 <div>
 
 ### 🎯 Modelagem de dados
-    
-<img width="553" alt="Captura de Tela 2022-03-31 às 11 16 56" src="https://user-images.githubusercontent.com/79329906/161170600-821b5083-fd13-411c-85b6-d7a5246560c0.png">
+<img width="784" alt="Captura de Tela 2022-04-05 às 10 21 25" src="https://user-images.githubusercontent.com/79329906/162442432-1faa2ec4-3e95-4ea7-80ce-276232aa0d81.png">
 
-    
 </div>
   
 ##
