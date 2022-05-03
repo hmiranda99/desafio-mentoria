@@ -9,16 +9,10 @@ use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
-    public function list()
-    {
-        $user = User::all();
-        if (is_null($user)) {
-            return response()->json(["Tabelas inexistentes."], 404);
-        }
-
-        return response()->json([$user], 200);
-    }
-
+    /**
+     * @method create() create the users by 
+     * @param UserRequest $request 
+     */
     public function create(UserRequest $request)
     {
         //armazenando os dados nas variáveis para fazer o insert 
@@ -44,5 +38,35 @@ class UserController extends Controller
 
         //retornando a status code
         return response()->json(["Usuário criado com sucesso!"], 201);
+    }
+
+    /**
+     * @method list() list the users
+     */
+    public function list()
+    {
+
+        $user = User::select('name', 'email', 'password', 'cnpj', 'cpf', 'user_entity')->get();
+
+        if (is_null($user)) {
+            return response()->json(["Tabelas inexistentes."], 404);
+        }
+
+        return response()->json([$user], 200);
+    }
+
+    /**
+     * @method get() get user by 
+     * @param int $id
+     */
+    public function get(int $id)
+    {
+        $id = User::find([$id], ['name', 'email', 'password', 'cnpj', 'cpf', 'user_entity']);
+
+        if (is_null($id)) {
+            return response()->json(["Esse usuário não existe."], 404);
+        }
+
+        return response()->json([$id], 200);
     }
 }
