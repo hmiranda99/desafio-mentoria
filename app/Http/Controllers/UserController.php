@@ -14,19 +14,16 @@ class UserController extends Controller
      * @param UserRequest $request 
      */
     public function create(UserRequest $request)
-    {
-        //armazenando os dados nas variáveis para fazer o insert 
+    { 
         $name = $request['name'];
         $email = $request['email'];
         $password = Hash::make(request('password'));
         $cnpj = $request['cnpj'];
         $cpf = $request['cpf'];
 
-        //verificando o tipo do usuário
         //is_null($cnpj) ? $user_entity = 'consumer' : $user_entity = 'seller';
         $user_entity = is_null($cnpj) ? 'consumer' : 'seller';
 
-        //inserindo o usuário
         User::create([
             'name' => $name,
             'email' => $email,
@@ -36,7 +33,6 @@ class UserController extends Controller
             'user_entity' => $user_entity,
         ]);
 
-        //retornando a status code
         return response()->json(["Usuário criado com sucesso!"], 201);
     }
 
@@ -68,5 +64,21 @@ class UserController extends Controller
         }
 
         return response()->json([$id], 200);
+    }
+
+    /**
+     * @method delete() delete user by 
+     * @param int $id
+     */
+    public function delete($id)
+    {
+        $id = User::find($id);
+
+        if (is_null($id)) {
+            return response()->json(["O usuário que você está tentando deletar não existe."], 404);
+        }
+
+        $id->delete();
+        return response()->json(["O usuário foi deletado com sucesso!"], 200);
     }
 }
