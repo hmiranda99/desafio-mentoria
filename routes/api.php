@@ -21,5 +21,8 @@ use App\Http\Controllers\UserController;
 });*/
 
 Route::get('/check', [HealthController::class, 'check']);
-Route::get('/users', [UserController::class, 'list']);
 Route::post('/create-users', [UserController::class, 'create']);
+Route::get('/users', [UserController::class, 'list']);
+Route::get('/list/users/{id}', [UserController::class, 'get']);
+Route::delete('/delete/user/{id}', [UserController::class, 'delete']);
+Route::put('/update/user/{id}', [UserController::class, 'update']);
