@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:2|max:80|alpha',
+            'name' => 'required|string|min:2|max:80',
             'email' => 'required|unique:users|email:rfc,dns',
             'password' => 'required',
             'cnpj' => ['unique:users', 'max:18', 'required_without:cpf', 'nullable' , new CnpjUser],
@@ -43,7 +43,6 @@ class UserRequest extends FormRequest
             'name.string' => 'É permitido somente letras no nome.',
             'name.min' => 'É necessário no mínimo 2 caracteres no nome.',
             'name.max' => 'Quantidade máxima permitida é de 80 caracteres, digite novamente.',
-            'name.alpha' => 'Somente letras no nome.',
             //email
             'email.required' => 'O email é obrigatório.',
             'email.unique' => 'Este email já existe, digite novamente.',
