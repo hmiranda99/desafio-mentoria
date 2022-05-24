@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('transactions', function (Blueprint $table) {
-            // adicionando colunas
+        Schema::create('transactions_types', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('description', 100)->index();
             $table->datetime('created_at')->index();
             $table->datetime('deleted_at')->nullable()->default(null)->index();
             $table->datetime('updated_at')->nullable()->default(null);
@@ -28,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('transactions', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('transactions_types');
     }
 };

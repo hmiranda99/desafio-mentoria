@@ -15,17 +15,16 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->datetime('transaction_at')->index();
             $table->string('status', 60)->index();
             $table->float('value', 10, 2);
-            $table->unsignedInteger('owner_payer_id');
-            $table->foreign('owner_payer_id')->references('id')->on('owners')->onDelete('cascade');
-            $table->unsignedInteger('owner_payee_id')->nullable()->default(null)->index();
+            $table->unsignedInteger('user_payer_id');
+            $table->foreign('user_payer_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('user_payee_id')->nullable()->default(null)->index();
             $table->unsignedInteger('transaction_type');
             $table->foreign('transaction_type')->references('id')->on('transactions_types')->onDelete('cascade');
-            $table->timestamps();
-            // created_at ->
-            // deleted_at ->
+            $table->datetime('created_at')->index();
+            $table->datetime('deleted_at')->nullable()->default(null)->index();
+            $table->datetime('updated_at')->nullable()->default(null);
         });
     }
 
