@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\HealthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,8 @@ use App\Http\Controllers\Api\HealthController;
 });*/
 
 Route::get('/check', [HealthController::class, 'check']);
+Route::post('/create-users', [UserController::class, 'create']);
+Route::get('/users', [UserController::class, 'list']);
+Route::get('/list/users/{id}', [UserController::class, 'get']);
+Route::delete('/delete/user/{id}', [UserController::class, 'delete']);
+Route::put('/update/user/{id}', [UserController::class, 'update']);
