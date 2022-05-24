@@ -14,7 +14,7 @@ class UserController extends Controller
      * @param UserRequest $request 
      */
     public function create(UserRequest $request)
-    { 
+    {
         $name = $request['name'];
         $email = $request['email'];
         $password = Hash::make(request('password'));
@@ -42,7 +42,7 @@ class UserController extends Controller
     public function list()
     {
 
-        $user = User::select('name', 'email', 'password', 'cnpj', 'cpf', 'user_entity')->get();
+        $user = User::select('id', 'name', 'email', 'password', 'cnpj', 'cpf', 'user_entity')->get();
 
         if (is_null($user)) {
             return response()->json(["Tabelas inexistentes."], 404);
@@ -57,7 +57,7 @@ class UserController extends Controller
      */
     public function get(int $id)
     {
-        $id = User::find([$id], ['name', 'email', 'password', 'cnpj', 'cpf', 'user_entity']);
+        $id = User::find([$id], ['id', 'name', 'email', 'password', 'cnpj', 'cpf', 'user_entity']);
 
         if (is_null($id)) {
             return response()->json(["Esse usuário não existe."], 404);
@@ -80,5 +80,30 @@ class UserController extends Controller
 
         $id->delete();
         return response()->json(["O usuário foi deletado com sucesso!"], 200);
+    }
+
+    public function update(int $userId, Request $request)
+    {
+        try {
+            $userId = User::find($userId);
+
+            if (is_null($userId)) {
+                return response()->json(["Esse usuário não existe."], 404);
+            }
+            
+            $password = $request->input('password');
+
+            if(!is_null($password)){
+                $request['password'] = Hash::make($password);
+            }
+
+            $userId->update(
+                $request->all()
+            );
+
+            return response()->json([$userId], 200);
+        } catch (\Exception $e) {
+            return response()->json([$e]);
+        }
     }
 }
