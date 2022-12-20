@@ -45,11 +45,20 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
+            'read' => [
+                'host' => explode(',', env('DB_HOST_READ', env('DB_HOST'))),
+            ],
+            'write' => [
+                'host' => [
+                    env('DB_HOST_WRITE', env('DB_HOST'))
+                ],
+            ],
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST'), //for querys
+            //'host' => env('DB_HOST_CONNECTION'), //for migration
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
+            'database' => env('DB_DATABASE', 'laravel'),
+            'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
