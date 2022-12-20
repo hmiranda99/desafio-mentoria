@@ -9,8 +9,10 @@ class HealthController extends Controller
 {
     public function check(): JsonResponse
     {
-        return response()->json([
+        return response()->json(
+            [
             'status' => 200,
-        ]);
+            ]
+        );
     }
 }

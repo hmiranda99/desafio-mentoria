@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     /**
      * @method create() create the users by 
-     * @param UserRequest $request 
+     * @param  UserRequest $request 
      */
     public function create(UserRequest $request)
     {
@@ -24,25 +24,27 @@ class UserController extends Controller
         //is_null($cnpj) ? $user_entity = 'consumer' : $user_entity = 'seller';
         $user_entity = is_null($cnpj) ? 'consumer' : 'seller';
 
-        User::create([
+        User::create(
+            [
             'name' => $name,
             'email' => $email,
             'password' => $password,
             'cnpj' => $cnpj,
             'cpf' => $cpf,
             'user_entity' => $user_entity,
-        ]);
+            ]
+        );
 
         return response()->json(["Usuário criado com sucesso!"], 201);
     }
 
     /**
-    * @OA\Get(
-    *     path="/users",
-    *     description="List users",
-    *     @OA\Response(response="default", description="Welcome page")
-    * )
-    */
+     * @OA\Get(
+     *     path="/users",
+     *     description="List users",
+     * @OA\Response(response="default", description="Welcome page")
+     * )
+     */
     public function list()
     {
 
@@ -57,7 +59,7 @@ class UserController extends Controller
 
     /**
      * @method get() get user by 
-     * @param int $id
+     * @param  int $id
      */
     public function get(int $id)
     {
@@ -72,7 +74,7 @@ class UserController extends Controller
 
     /**
      * @method delete() delete user by 
-     * @param int $id
+     * @param  int $id
      */
     public function delete($id)
     {
@@ -97,7 +99,7 @@ class UserController extends Controller
             
             $password = $request->input('password');
 
-            if(!is_null($password)){
+            if(!is_null($password)) {
                 $request['password'] = Hash::make($password);
             }
 
