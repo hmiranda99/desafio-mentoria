@@ -61,5 +61,5 @@ Documentação JSON: [http://localhost:65080/docs](http://localhost:65080/api/do
 ### Libs
 - [x] Health check <br>
 - [x] Swagger <br>
-- [ ] PHPCs <br>
+- [x] PHPCs <br>
 - [ ] PHPUnit <br>
