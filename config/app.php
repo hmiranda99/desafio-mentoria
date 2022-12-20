@@ -170,6 +170,8 @@ return [
         /*
          * Package Service Providers...
          */
+        UKFast\HealthCheck\HealthCheckServiceProvider ::class,
+        L5Swagger\L5SwaggerServiceProvider::class,
 
         /*
          * Application Service Providers...

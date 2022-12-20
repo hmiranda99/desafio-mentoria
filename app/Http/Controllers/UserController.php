@@ -37,8 +37,12 @@ class UserController extends Controller
     }
 
     /**
-     * @method list() list the users
-     */
+    * @OA\Get(
+    *     path="/users",
+    *     description="List users",
+    *     @OA\Response(response="default", description="Welcome page")
+    * )
+    */
     public function list()
     {
 

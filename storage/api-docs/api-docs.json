@@ -1,0 +1,21 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Desafio backend",
+        "description": "Para esse desafio foi desenvolvida uma API escalável que tem como objetivo realizar transferências bancárias entre dois tipos de usuários, comuns e lojistas.",
+        "version": "3.0.0"
+    },
+    "paths": {
+        "/users": {
+            "get": {
+                "description": "List users",
+                "operationId": "3eb193824e2e4a0367a12e7ca30c767c",
+                "responses": {
+                    "default": {
+                        "description": "Welcome page"
+                    }
+                }
+            }
+        }
+    }
+}
