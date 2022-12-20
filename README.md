@@ -52,3 +52,14 @@ Para esse desafio foi desenvolvida uma API escalável que tem como objetivo real
 ##
 
 ### 👨🏻‍💻 Primeiros passos
+
+#### URLs importantes
+Health check: [http://localhost:65080/health](http://localhost:65080/health)
+Documentação: [http://localhost:65080/api/documentation](http://localhost:65080/api/documentation)
+Documentação JSON: [http://localhost:65080/docs](http://localhost:65080/api/documentation)
+
+### Libs
+[x] Health check
+[x] Swagger
+[] PHPCs
+[] PHPUnit
