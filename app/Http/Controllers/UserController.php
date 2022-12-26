@@ -2,114 +2,93 @@
 
 namespace App\Http\Controllers;
 
+use App\Adapters\UserDtoAdapter;
 use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\UserRequest;
+use Illuminate\Http\Response;
+use App\Exceptions\UsersExceptions\UserAlreadExistsException;
+use App\Helpers\UserHelper;
+use App\Http\Requests\CreateUserDto;
+use App\Http\Resources\UserResource;
+use App\Repositories\UserRepository;
+use Fig\Http\Message\StatusCodeInterface;
 
 class UserController extends Controller
 {
+    public function __construct(
+        UserRepository $userRepository,
+        UserDtoAdapter $userDtoAdapter,
+        UserHelper $userHelper
+    ) {
+        $this->userRepository = $userRepository;
+        $this->userDtoAdapter = $userDtoAdapter;
+        $this->userHelper = $userHelper;
+    }
+
+    
     /**
-     * @method create() create the users by 
-     * @param  UserRequest $request 
+     * This method creates a new user.
+     * 
+     * @param  CreateUserDto $createUserDto 
+     * @return Response
      */
-    public function create(UserRequest $request)
+    public function createUser(CreateUserDto $createUserDto): Response
     {
-        $name = $request['name'];
-        $email = $request['email'];
-        $password = Hash::make(request('password'));
-        $cnpj = $request['cnpj'];
-        $cpf = $request['cpf'];
+        if ($this->userRepository->getUserByEmail($createUserDto->email)) {
+            throw new UserAlreadExistsException();
+        }
 
-        //is_null($cnpj) ? $user_entity = 'consumer' : $user_entity = 'seller';
-        $user_entity = is_null($cnpj) ? 'consumer' : 'seller';
+        $createUserDto->user_entity = $this->userHelper->definesUserEntity($createUserDto->cnpj);
+        $createUserDto->password = $this->userHelper->encryptPassword($createUserDto->password);
+        $userDto = $this->userDtoAdapter->adapter($createUserDto, null, null); 
+        $userDto = $this->userRepository->createUser($userDto);
 
-        User::create(
-            [
-            'name' => $name,
-            'email' => $email,
-            'password' => $password,
-            'cnpj' => $cnpj,
-            'cpf' => $cpf,
-            'user_entity' => $user_entity,
-            ]
-        );
+        return response(UserResource::make($userDto), StatusCodeInterface::STATUS_CREATED);
+    }
 
-        return response()->json(["Usuário criado com sucesso!"], 201);
+
+    /**
+     * This method gets a user by id.
+     * 
+     * @param  int $userId
+     * @return Response
+     */
+    public function getUser(int $userId): Response
+    {
+        $userDto = $this->userHelper->hasUser($userId);
+        return response(UserResource::make($userDto), StatusCodeInterface::STATUS_OK);
     }
 
     /**
-     * @OA\Get(
-     *     path="/users",
-     *     description="List users",
-     * @OA\Response(response="default", description="Welcome page")
-     * )
+     * This method deletes a user by id.
+     * 
+     * @param  int $userId
+     * @return Response
      */
-    public function list()
+    public function deleteUser(int $userId): Response
     {
-
-        $user = User::select('id', 'name', 'email', 'password', 'cnpj', 'cpf', 'user_entity')->get();
-
-        if (is_null($user)) {
-            return response()->json(["Tabelas inexistentes."], 404);
-        }
-
-        return response()->json([$user], 200);
+        $this->userHelper->hasUser($userId);
+        $this->userRepository->deleteUser($userId);
+        return response(null, StatusCodeInterface::STATUS_NO_CONTENT);
     }
 
     /**
-     * @method get() get user by 
-     * @param  int $id
+     * This method updates a user's data by id.
+     * 
+     * @param  int $userId
+     * @param Request
+     * @return Response
      */
-    public function get(int $id)
+    public function updateUser(int $userId, Request $request): Response
     {
-        $id = User::find([$id], ['id', 'name', 'email', 'password', 'cnpj', 'cpf', 'user_entity']);
+        $userDto = $this->userHelper->hasUser($userId);
+        $this->userHelper->validateRequestUpdate($request, $userDto);
 
-        if (is_null($id)) {
-            return response()->json(["Esse usuário não existe."], 404);
-        }
+        $request['user_entity'] = $this->userHelper->definesUserEntity($request['cnpj']);
+        $request['password'] = $this->userHelper->hasNewPassword($request['password'], $userId);
 
-        return response()->json([$id], 200);
-    }
-
-    /**
-     * @method delete() delete user by 
-     * @param  int $id
-     */
-    public function delete($id)
-    {
-        $id = User::find($id);
-
-        if (is_null($id)) {
-            return response()->json(["O usuário que você está tentando deletar não existe."], 404);
-        }
-
-        $id->delete();
-        return response()->json(["O usuário foi deletado com sucesso!"], 200);
-    }
-
-    public function update(int $userId, Request $request)
-    {
-        try {
-            $userId = User::find($userId);
-
-            if (is_null($userId)) {
-                return response()->json(["Esse usuário não existe."], 404);
-            }
-            
-            $password = $request->input('password');
-
-            if(!is_null($password)) {
-                $request['password'] = Hash::make($password);
-            }
-
-            $userId->update(
-                $request->all()
-            );
-
-            return response()->json([$userId], 200);
-        } catch (\Exception $e) {
-            return response()->json([$e]);
-        }
+        $userRequestDto = $this->userDtoAdapter->adapter(null, $request->toArray(), $userId);
+        $this->userRepository->updateUser($userRequestDto, $userId);
+       
+        return response(null, StatusCodeInterface::STATUS_NO_CONTENT);
     }
 }
