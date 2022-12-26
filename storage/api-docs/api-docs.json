@@ -6,15 +6,202 @@
         "version": "3.0.0"
     },
     "paths": {
-        "/users": {
-            "get": {
-                "description": "List users",
-                "operationId": "3eb193824e2e4a0367a12e7ca30c767c",
+        "/api/create-users": {
+            "post": {
+                "tags": [
+                    "Create user"
+                ],
+                "summary": "Create a new user",
+                "description": "This endpoint creates a new user.",
+                "operationId": "08dd747161a7d47a112f80793ede3e0d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/create_user_request"
+                            }
+                        }
+                    }
+                },
                 "responses": {
-                    "default": {
-                        "description": "Welcome page"
+                    "201": {
+                        "description": "User created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#components/schemas/user_response"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "User already exists."
                     }
                 }
+            }
+        },
+        "/api/list/user/{id}": {
+            "get": {
+                "tags": [
+                    "Get user"
+                ],
+                "summary": "Get user by id.",
+                "description": "This endpoint get user by your id.",
+                "operationId": "46d90244879d24365724ea2d09bfcf75",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User reference in the application",
+                        "schema": {
+                            "type": "int"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#components/schemas/user_response"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "This user does not exist in the database."
+                    }
+                }
+            }
+        },
+        "/api/update/user/{id}": {
+            "put": {
+                "tags": [
+                    "Update user"
+                ],
+                "summary": "Update user by id.",
+                "description": "This endpoint update data user by your id.",
+                "operationId": "13333e17f07b99ffe22a1e22221097db",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User reference in the application",
+                        "schema": {
+                            "type": "int"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/user_request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No content."
+                    },
+                    "400": {
+                        "description": "This user does not exist in the database."
+                    }
+                }
+            }
+        },
+        "/api/delete/user/{id}": {
+            "delete": {
+                "tags": [
+                    "Delete user"
+                ],
+                "summary": "Delete user by id.",
+                "description": "This endpoint delete user by your id.",
+                "operationId": "19568ef2ae85d5cec20de107c6c6269d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User reference in the application",
+                        "schema": {
+                            "type": "int"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content."
+                    },
+                    "400": {
+                        "description": "This user does not exist in the database."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "user_request": {
+                "properties": {
+                    "name": {
+                        "description": "User's full name.",
+                        "type": "string",
+                        "example": "Elizabeth Jhonson"
+                    },
+                    "email": {
+                        "description": "User email must be unique.",
+                        "type": "string",
+                        "example": "email@email.com"
+                    },
+                    "password": {
+                        "description": "",
+                        "type": "string",
+                        "example": "@!thi-$"
+                    },
+                    "cpf": {
+                        "description": "Required if the user does not have a cnpj, this will define him as a consumer.",
+                        "type": "string",
+                        "example": "75360676078"
+                    },
+                    "cnpj": {
+                        "description": "Required if the user does not have a cpf, this will define him as a seller.",
+                        "type": "string",
+                        "example": "40889832000125"
+                    }
+                },
+                "type": "object"
+            },
+            "user_response": {
+                "properties": {
+                    "id": {
+                        "description": "User reference.",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "name": {
+                        "description": "User's full name.",
+                        "type": "string",
+                        "example": "Elizabeth Jhonson"
+                    },
+                    "email": {
+                        "description": "User email must be unique.",
+                        "type": "string",
+                        "example": "email@email.com"
+                    },
+                    "user_entity": {
+                        "description": "User type.",
+                        "type": "string",
+                        "example": "seller"
+                    }
+                },
+                "type": "object"
             }
         }
     }
