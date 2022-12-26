@@ -2,40 +2,31 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\CnpjUser;
 use App\Rules\CpfUser;
+use App\Rules\CnpjUser;
+use Spatie\LaravelData\Data;
 
-class UserRequest extends FormRequest
+class CreateUserDto extends Data
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
+    public string $name;
+    public string $email;
+    public string $password;
+    public ?string $cnpj;
+    public ?string $cpf;
+    public ?string $user_entity;
+    
+    public static function rules() 
     {
         return [
             'name' => 'required|string|min:2|max:80',
             'email' => 'required|unique:users|email:rfc,dns',
             'password' => 'required',
-            'cnpj' => ['unique:users', 'max:18', 'required_without:cpf', 'nullable' , new CnpjUser],
-            'cpf' => ['unique:users', 'max:14', 'required_without:cnpj', 'nullable' , new CpfUser],
+            'cnpj' => ['unique:users', 'max:18', 'required_without:cpf', 'nullable', new CnpjUser],
+            'cpf' => ['unique:users', 'max:14', 'required_without:cnpj', 'nullable', new CpfUser],
         ];
     }
-
-
-    public function messages()
+     
+    public static function messages()
     {
         return [
             //nome
@@ -58,7 +49,7 @@ class UserRequest extends FormRequest
             'cpf.unique' => 'Este CPF já existe, digite novamente.',
             'cpf.required' => 'O CPF É obrigatório.',
             'cpf.max' => 'Limite de 14 caracteres, digite novamente.',
-            'cpf.required_without' => 'Campo CPF vazio.',
+            'cpf.required_without' => 'Campo CPF vazio.'
         ];
-    }
+    } 
 }
