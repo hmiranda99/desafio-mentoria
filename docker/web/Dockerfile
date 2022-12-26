@@ -25,7 +25,14 @@ RUN apk add --no-cache $PHPIZE_DEPS \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && docker-php-ext-install mysqli pdo pdo_mysql bcmath sockets
- 
+
+RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/php.ini-development
+RUN echo "xdebug.mode=coverage" >> /usr/local/etc/php/php.ini-development
+RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/php.ini-production
+RUN echo "xdebug.mode=coverage" >> /usr/local/etc/php/php.ini-production
+
 # Docker non-root-user
 ## definindo variáveis de ambiente
 ## ARG definindo o valor no momento da construção da imagem
