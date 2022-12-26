@@ -52,7 +52,8 @@ class UserController extends Controller
      * @param  int $userId
      * @return Response
      */
-    public function getUser(int $userId): Response {
+    public function getUser(int $userId): Response 
+    {
         $userDto = $this->userHelper->hasUser($userId);
         return response(UserResource::make($userDto), StatusCodeInterface::STATUS_OK);
     }
