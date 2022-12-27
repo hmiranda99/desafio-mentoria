@@ -21,10 +21,11 @@ jobs:
           coverage: xdebug
           
       - name: Install dependencies with composer
-        run: | 
-          composer update --no-ansi --no-interaction --no-progress
-          vendor/bin/phpunit --coverage-clover=coverage.xml
-          sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' coverage.xml
+        run: composer update --no-ansi --no-interaction --no-progress
+      - name: Run tests with phpunit/phpunit
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml
+      - name: Fix code coverage paths
+        run: sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' coverage.xml
         
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
