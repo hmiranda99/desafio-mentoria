@@ -22,7 +22,12 @@ class UserResource extends JsonResource
             'id' => $this->resource->id,
             'name' => $this->resource->name,
             'email' => $this->resource->email,
-            'user_entity' => $this->resource->user_entity
+            'user_entity' => $this->resource->user_entity,
+            'document' => [
+                'cpf' => $this->resource->cpf ?? null,
+                'cnpj' => $this->resource->cnpj ?? null
+            ],
+            'account' => $this->resource->account->toArray()
         ];
     }
 }

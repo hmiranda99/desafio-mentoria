@@ -9,6 +9,7 @@ use App\Exceptions\UsersExceptions\UserAlreadExistsException;
 use App\Helpers\UserHelper;
 use App\Http\Requests\CreateUserDto;
 use App\Http\Resources\UserResource;
+use App\Repositories\AccountRepository;
 use App\Repositories\UserRepository;
 use Fig\Http\Message\StatusCodeInterface;
 
@@ -17,18 +18,19 @@ class UserController extends Controller
     public function __construct(
         UserRepository $userRepository,
         UserDtoAdapter $userDtoAdapter,
-        UserHelper $userHelper
+        UserHelper $userHelper,
+        AccountRepository $accountRepository
     ) {
         $this->userRepository = $userRepository;
         $this->userDtoAdapter = $userDtoAdapter;
         $this->userHelper = $userHelper;
+        $this->accountRepository = $accountRepository;
     }
 
-    
+
     /**
-     * This method creates a new user.
-     * 
-     * @param  CreateUserDto $createUserDto 
+     * This method creates a new user and an account for him.
+     * @param  CreateUserDto $createUserDto
      * @return Response
      */
     public function createUser(CreateUserDto $createUserDto): Response
@@ -39,8 +41,11 @@ class UserController extends Controller
 
         $createUserDto->user_entity = $this->userHelper->definesUserEntity($createUserDto->cnpj);
         $createUserDto->password = $this->userHelper->encryptPassword($createUserDto->password);
-        $userDto = $this->userDtoAdapter->adapter($createUserDto, null, null); 
+        $userDto = $this->userDtoAdapter->adapter($createUserDto, null, null);
         $userDto = $this->userRepository->createUser($userDto);
+
+        $account = $this->accountRepository->getAccountByUserId($userDto->id);
+        $userDto->account = $account;
 
         return response(UserResource::make($userDto), StatusCodeInterface::STATUS_CREATED);
     }
@@ -48,19 +53,20 @@ class UserController extends Controller
 
     /**
      * This method gets a user by id.
-     * 
      * @param  int $userId
      * @return Response
      */
-    public function getUser(int $userId): Response 
+    public function getUser(int $userId): Response
     {
+        $account = $this->accountRepository->getAccountByUserId($userId);
         $userDto = $this->userHelper->hasUser($userId);
+        $userDto->account = $account;
+
         return response(UserResource::make($userDto), StatusCodeInterface::STATUS_OK);
     }
 
     /**
      * This method deletes a user by id.
-     * 
      * @param  int $userId
      * @return Response
      */
@@ -68,12 +74,12 @@ class UserController extends Controller
     {
         $this->userHelper->hasUser($userId);
         $this->userRepository->deleteUser($userId);
+        $this->accountRepository->deleteAccountByUserId($userId);
         return response(null, StatusCodeInterface::STATUS_NO_CONTENT);
     }
 
     /**
      * This method updates a user's data by id.
-     * 
      * @param  int $userId
      * @param Request
      * @return Response
@@ -88,7 +94,7 @@ class UserController extends Controller
 
         $userRequestDto = $this->userDtoAdapter->adapter(null, $request->toArray(), $userId);
         $this->userRepository->updateUser($userRequestDto, $userId);
-       
+
         return response(null, StatusCodeInterface::STATUS_NO_CONTENT);
     }
 }
