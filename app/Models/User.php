@@ -31,4 +31,9 @@ class User extends Model
 
     public const CONSUMER = 'consumer';
     public const SELLER = 'seller';
+
+    public function account()
+    {
+        return $this->hasOne(Account::class);
+    }
 } 

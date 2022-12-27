@@ -13,4 +13,5 @@ class UserDto extends DataTransferObject
     public string $user_entity;
     public ?string $cnpj;
     public ?string $cpf;
+    public ?AccountDto $account;
 }
