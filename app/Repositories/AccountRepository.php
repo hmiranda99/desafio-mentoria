@@ -12,7 +12,7 @@ class AccountRepository
      * @param  int $userId
      * @return Response
      */
-    public function getAccountByUserId(int $userId): AccountDto
+    public function getAccountByUserId(int $userId): ?AccountDto
     {
         $account = Account::where('user_id', 'LIKE', '%' . $userId . '%')->first();
         return $account ? new AccountDto($account->toArray()) : null;

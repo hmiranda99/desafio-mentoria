@@ -58,8 +58,8 @@ class UserController extends Controller
      */
     public function getUser(int $userId): Response
     {
-        $account = $this->accountRepository->getAccountByUserId($userId);
         $userDto = $this->userHelper->hasUser($userId);
+        $account = $this->accountRepository->getAccountByUserId($userId);
         $userDto->account = $account;
 
         return response(UserResource::make($userDto), StatusCodeInterface::STATUS_OK);

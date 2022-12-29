@@ -12,9 +12,4 @@ class Account extends Model
     protected $table = 'accounts';
 
     protected $guarded = [];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }
