@@ -44,7 +44,7 @@ class UserHelperTest extends TestCase
         $this->assertIsString($response);
     }
 
-    public function testSholdHaveUserInDatabase()
+    public function testShouldHaveUserInDatabase()
     {
         $userId = 1;
         $userDto = UserDtoFactory::userMakeRealFactory(['id' => $userId]);
@@ -62,7 +62,7 @@ class UserHelperTest extends TestCase
         $this->assertNotEmpty($response);
     }
 
-    public function testDontSholdHaveUserInDatabase()
+    public function testDontShouldHaveUserInDatabase()
     {
         $userId = 0;
 
@@ -80,7 +80,7 @@ class UserHelperTest extends TestCase
         $this->assertNull($response);
     }
 
-    public function testSholdHaveApplyRulesInUpdate()
+    public function testShouldHaveApplyRulesInUpdate()
     {
         $userDto = UserDtoFactory::userMakeRealFactory(['cnpj' => '54.674.564/0001-39', 'cpf' => '271.846.355-40']);
         $message = response()->json(["email" => "The email must be a valid email address."]);
@@ -94,7 +94,7 @@ class UserHelperTest extends TestCase
         $this->assertEquals($message->getContent(), $response);
     }
 
-    public function testSholdDontHaveApplyRulesInUpdate()
+    public function testShouldDontHaveApplyRulesInUpdate()
     {
         $userDto = UserDtoFactory::userMakeRealFactory([
             'email' => 'email@email.com',
@@ -109,7 +109,7 @@ class UserHelperTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    public function testSholdDontHaveNewPassword()
+    public function testShouldDontHaveNewPassword()
     {
         $userId = 1;
         $password = "$2y$04udJz4ZISd27/d8Td3GRoserpoizlqFCPpTYR3KXtSaaPjxsa0uEOO";
@@ -130,7 +130,7 @@ class UserHelperTest extends TestCase
         $this->assertIsString($response);
     }
 
-    public function testSholdHaveNewPassword()
+    public function testShouldHaveNewPassword()
     {
         $userId = 1;
         $password = "$2y$04udJz4ZISd27/d8Td3GRoserpoizlqFCPpTYR3KXtSaaPjxsa0uEOO";

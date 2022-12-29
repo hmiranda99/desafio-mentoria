@@ -37,7 +37,8 @@ class UserDtoFactory extends Factory
                 'user_entity' => FakerMap::faker()->randomElement([
                     User::CONSUMER,
                     User::SELLER
-                ])
+                ]),
+                'account' => null
             ], $attributes))
             ->make();
     }
