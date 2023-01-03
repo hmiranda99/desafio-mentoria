@@ -19,7 +19,9 @@ jobs:
         run: cp .env.example .env
 
       - name: network
-        run: docker network create bubble
+        run: |
+          docker network create bubble
+          docker volume create --name=vol-db-desafio
 
       - name: Build Gatekeeper Controller
         run: docker-compose -f docker-compose.yml up -d
