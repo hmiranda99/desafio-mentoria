@@ -24,9 +24,7 @@ jobs:
           docker volume create --name=vol-db-desafio
 
       - name: Docker 
-        run: |
-          docker-compose -f docker-compose.yml up -d
-          docker exec -it desafio_php74 sh
+        run: docker-compose -f docker-compose.yml up -d
 
       - name: PHPUnit
         run: composer phpunit
