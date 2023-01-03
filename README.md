@@ -1,4 +1,18 @@
 <div align="center">
+
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=hmiranda99_desafio-mentoria&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=hmiranda99_desafio-mentoria)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=hmiranda99_desafio-mentoria&metric=bugs)](https://sonarcloud.io/summary/new_code?id=hmiranda99_desafio-mentoria)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=hmiranda99_desafio-mentoria&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=hmiranda99_desafio-mentoria)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=hmiranda99_desafio-mentoria&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=hmiranda99_desafio-mentoria)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=hmiranda99_desafio-mentoria&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=hmiranda99_desafio-mentoria)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=hmiranda99_desafio-mentoria&metric=coverage)](https://sonarcloud.io/summary/new_code?id=hmiranda99_desafio-mentoria)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=hmiranda99_desafio-mentoria&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=hmiranda99_desafio-mentoria)
+
+</div>
+
+<br>
+
+<div align="center">
  
  # Desafio mentoria 
   
