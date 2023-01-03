@@ -10,8 +10,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class CreateUserTest extends TestCase
 {
     use DatabaseMigrations;
-    
-    public function testSholdCreateUserRoute()
+
+    public function testShouldCreateUser()
     {
         $createUserDto = CreateUserDtoFactory::userMakeRealFactory([
             'email' => 'email@email.com',
@@ -28,7 +28,7 @@ class CreateUserTest extends TestCase
         ]);
     }
 
-    public function testSholdCreateUsertButUserNotExistsRoute()
+    public function testShouldCreateUsertButUserNotExists()
     {
         $user = User::factory()->createOne([
             'email' => 'email@email.com',

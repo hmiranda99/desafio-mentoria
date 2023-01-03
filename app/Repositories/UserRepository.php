@@ -2,15 +2,19 @@
 
 namespace App\Repositories;
 
+use App\Helpers\AccountHelper;
 use App\Models\User;
 use App\Models\UserDto;
 
 class UserRepository
 {
+    public function __construct(AccountHelper $accountHelper)
+    {
+        $this->accountHelper = $accountHelper;
+    }
 
     /**
      * This method gets the user by email.
-     * 
      * @param string $email
      * @return ?UserDto
      */
@@ -22,7 +26,6 @@ class UserRepository
 
     /**
      * This method gets the user by email.
-     * 
      * @param int $userId
      * @return ?UserDto
      */
@@ -34,21 +37,21 @@ class UserRepository
 
     /**
      * This method inserts user data into the database.
-     * 
      * @param UserDto $userDto
      * @return UserDto
      */
     public function createUser(UserDto $userDto): UserDto
     {
+        $accountUserData = $this->accountHelper->accountUserData();
         $user = $this->createUserModel($userDto, null);
         $user->save();
+        $user->account()->create($accountUserData);
 
         return new UserDto($user->toArray());
     }
 
     /**
      * This method deletes the user data from the database.
-     * 
      * @param int $userId
      * @return bool
      */
@@ -59,7 +62,6 @@ class UserRepository
 
     /**
      * This method updates the user data in the database.
-     * 
      * @param UserDto $userDto
      * @param int $userId
      * @return bool
@@ -72,7 +74,6 @@ class UserRepository
 
     /**
      * This method prepares the data to be saved in the database.
-     * 
      * @param UserDto $userDto
      * @param ?int $userId
      * @return User
@@ -92,7 +93,6 @@ class UserRepository
 
     /**
      * This method checks if the user is already in the database by its id.
-     * 
      * @param UserDto $userDto
      * @param ?int $userId
      * @return User

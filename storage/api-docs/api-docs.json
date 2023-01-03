@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Desafio backend",
-        "description": "Para esse desafio foi desenvolvida uma API escalável que tem como objetivo realizar transferências bancárias entre dois tipos de usuários, comuns e lojistas.",
+        "description": "For this challenge, a scalable API was developed that aims to perform bank transfers between two types of users, ordinary users and shopkeepers.",
         "version": "3.0.0"
     },
     "paths": {
@@ -19,7 +19,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#components/schemas/create_user_request"
+                                "$ref": "#components/schemas/user_request"
                             }
                         }
                     }
@@ -199,6 +199,39 @@
                         "description": "User type.",
                         "type": "string",
                         "example": "seller"
+                    },
+                    "document": {
+                        "description": "Details about the card brand",
+                        "properties": {
+                            "cpf": {
+                                "type": "string",
+                                "example": "75360676078"
+                            },
+                            "cnpj": {
+                                "type": "string",
+                                "example": "40889832000125"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "account": {
+                        "description": "Details about the card brand",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": "5"
+                            },
+                            "account": {
+                                "type": "string",
+                                "example": "121622197-9"
+                            },
+                            "number": {
+                                "type": "number",
+                                "format": "float",
+                                "example": "152.8"
+                            }
+                        },
+                        "type": "object"
                     }
                 },
                 "type": "object"

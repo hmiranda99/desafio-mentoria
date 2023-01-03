@@ -3,7 +3,6 @@
 namespace App\Adapters;
 
 use App\Models\UserDto;
-use Illuminate\Support\Facades\Hash;
 
 class UserDtoAdapter
 {

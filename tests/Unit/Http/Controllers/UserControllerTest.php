@@ -15,6 +15,8 @@ use Tests\Unit\Models\CreateUserDtoFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Exceptions\UsersExceptions\UserNotExistsException;
 use App\Exceptions\UsersExceptions\UserAlreadExistsException;
+use App\Repositories\AccountRepository;
+use Tests\Unit\Models\AccountDtoFactory;
 
 class UserControllerTest extends TestCase
 {
@@ -23,6 +25,7 @@ class UserControllerTest extends TestCase
     private $userRepository;
     private $userDtoAdapter;
     private $userHelper;
+    private $accountRepository;
 
     public function setUp(): void
     {
@@ -31,13 +34,15 @@ class UserControllerTest extends TestCase
         $this->userRepository = $this->createMock(UserRepository::class);
         $this->userDtoAdapter = $this->createMock(UserDtoAdapter::class);
         $this->userHelper = $this->createMock(UserHelper::class);
+        $this->accountRepository = $this->createMock(AccountRepository::class);
     }
 
-    public function testSholdCreateUser()
+    public function testShouldCreateUser()
     {
         $passwordEncrypt = '$2y$10$/UIAUCtO9gQaCXp5cQJj6eL332sMUzJDDu/6m31ZeJ9Oj1pkJNA3.';
         $createUserDto = CreateUserDtoFactory::userMakeRealFactory(['password' => '1234567', 'user_entity' => User::SELLER]);
         $userDto = UserDtoFactory::userMakeRealFactory($createUserDto->toArray());
+        $accountDto = AccountDtoFactory::accountMakeRealFactory();
 
         $this->userRepository
             ->expects($this->once())
@@ -69,14 +74,20 @@ class UserControllerTest extends TestCase
             ->with($userDto)
             ->willReturn($userDto);
 
-        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper);
+        $this->accountRepository
+            ->expects($this->once())
+            ->method('getAccountByUserId')
+            ->with($userDto->id)
+            ->willReturn($accountDto);
+
+        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper, $this->accountRepository);
         $response = $instance->createUser($createUserDto);
 
         $this->assertEquals(StatusCodeInterface::STATUS_CREATED, $response->getStatusCode());
         $this->assertNotEmpty($response);
     }
 
-    public function testSholdCreateUserButUserAlreadyExists()
+    public function testShouldCreateUserButUserAlreadyExists()
     {
         $createUserDto = CreateUserDtoFactory::userMakeFactory();
         User::factory()->createOne($createUserDto->toArray());
@@ -90,16 +101,23 @@ class UserControllerTest extends TestCase
 
         $this->expectException(UserAlreadExistsException::class);
 
-        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper);
+        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper, $this->accountRepository);
         $response = $instance->createUser($createUserDto);
 
         $this->assertEquals(StatusCodeInterface::STATUS_CONFLICT, $response->getStatusCode());
     }
 
-    public function testSholdGetUserById()
+    public function testShouldGetUserById()
     {
         $user = User::factory()->createOne();
         $userDto = UserDtoFactory::userMakeRealFactory();
+        $accountDto = AccountDtoFactory::accountMakeRealFactory();
+
+        $this->accountRepository
+            ->expects($this->once())
+            ->method('getAccountByUserId')
+            ->with($user->id)
+            ->willReturn($accountDto);
 
         $this->userHelper
             ->expects($this->once())
@@ -107,14 +125,14 @@ class UserControllerTest extends TestCase
             ->with($user->id)
             ->willReturn($userDto);
 
-        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper);
+        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper, $this->accountRepository);
         $response = $instance->getUser($user->id);
 
         $this->assertEquals(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
         $this->assertNotEmpty($response);
     }
 
-    public function testSholdGetUserByIdButUserNotExists()
+    public function testShouldGetUserByIdButUserNotExists()
     {
         $id = 0;
 
@@ -126,13 +144,13 @@ class UserControllerTest extends TestCase
 
         $this->expectException(UserNotExistsException::class);
 
-        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper);
+        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper, $this->accountRepository);
         $response = $instance->getUser($id);
 
         $this->assertEquals(StatusCodeInterface::STATUS_BAD_REQUEST, $response->getStatusCode());
     }
 
-    public function testSholdDeleteUser()
+    public function testShouldDeleteUser()
     {
         $user = User::factory()->createOne();
         $userDto = UserDtoFactory::userMakeRealFactory();
@@ -149,14 +167,20 @@ class UserControllerTest extends TestCase
             ->with($user->id)
             ->willReturn(true);
 
-        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper);
+        $this->accountRepository
+            ->expects($this->once())
+            ->method('deleteAccountByUserId')
+            ->with($user->id)
+            ->willReturn(true);
+
+        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper, $this->accountRepository);
         $response = $instance->deleteUser($user->id);
 
         $this->assertEquals(StatusCodeInterface::STATUS_NO_CONTENT, $response->getStatusCode());
         $this->assertEmpty($response->getContent());
     }
 
-    public function testSholdDeleteUserButUserNotExistis()
+    public function testShouldDeleteUserButUserNotExistis()
     {
         $id = 0;
 
@@ -168,13 +192,13 @@ class UserControllerTest extends TestCase
 
         $this->expectException(UserNotExistsException::class);
 
-        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper);
+        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper, $this->accountRepository);
         $response = $instance->deleteUser($id);
 
         $this->assertEquals(StatusCodeInterface::STATUS_BAD_REQUEST, $response->getStatusCode());
     }
 
-    public function testSholdUpdateUser()
+    public function testShouldUpdateUser()
     {
         $user = User::factory()->createOne();
         $userDto = UserDtoFactory::userMakeRealFactory();
@@ -185,21 +209,21 @@ class UserControllerTest extends TestCase
             ->method('hasUser')
             ->with($user->id)
             ->willReturn($userDto);
-        
+
         $this->userHelper
             ->expects($this->once())
             ->method('definesUserEntity')
             ->with($user->cnpj)
             ->willReturn(User::SELLER);
 
-        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper);
+        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper, $this->accountRepository);
         $response = $instance->updateUser($user->id, $request);
 
         $this->assertEquals(StatusCodeInterface::STATUS_NO_CONTENT, $response->getStatusCode());
         $this->assertEmpty($response->getContent());
     }
 
-    public function testSholdUpdateUserButUserNotExists()
+    public function testShouldUpdateUserButUserNotExists()
     {
         $id = 0;
         $request = new Request();
@@ -212,7 +236,7 @@ class UserControllerTest extends TestCase
 
         $this->expectException(UserNotExistsException::class);
 
-        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper);
+        $instance = new UserController($this->userRepository, $this->userDtoAdapter, $this->userHelper, $this->accountRepository);
         $response = $instance->updateUser($id, $request);
 
         $this->assertEquals(StatusCodeInterface::STATUS_BAD_REQUEST, $response->getStatusCode());

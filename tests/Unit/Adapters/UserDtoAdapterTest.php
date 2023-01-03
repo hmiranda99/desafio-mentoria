@@ -12,6 +12,7 @@ class UserDtoAdapterTest extends TestCase
     public function testAdaptWithArray()
     {
         $userDto = UserDtoFactory::userMakeRealFactory();
+        $userDto->account = null;
 
         $instance = new UserDtoAdapter();
         $response = $instance->adapter($userDto, null, $userDto->id);

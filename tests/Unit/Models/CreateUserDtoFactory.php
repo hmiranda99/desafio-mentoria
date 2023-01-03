@@ -6,7 +6,6 @@ use App\Models\User;
 use Anteris\FakerMap\FakerMap;
 use Anteris\DataTransferObjectFactory\Factory;
 use App\Http\Requests\CreateUserDto;
-use Spatie\DataTransferObject\DataTransferObject;
 
 class CreateUserDtoFactory extends Factory
 {
@@ -20,7 +19,7 @@ class CreateUserDtoFactory extends Factory
         return Factory::new(self::$dtoClass)->make();
     }
 
-     /**
+    /**
      * @param array $attributes
      * @return CreateUserDto
      */

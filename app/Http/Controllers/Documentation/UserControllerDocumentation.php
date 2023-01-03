@@ -69,6 +69,41 @@ use App\Http\Requests\CreateUserDto;
  *              example="seller",
  *              description="User type.",
  *              type="string"
+ *          ),
+ *          @OA\Property(
+ *              property="document",
+ *              description="Details about the card brand",
+ *              type="object",
+ *              @OA\Property(
+ *                  property="cpf",
+ *                  example="75360676078",
+ *                  type="string"
+ *              ),
+ *              @OA\Property(
+ *                  property="cnpj",
+ *                  example="40889832000125",
+ *                  type="string"
+ *              )
+ *          ),
+ *          @OA\Property(
+ *              property="account",
+ *              description="Details about the card brand",
+ *              type="object",
+ *              @OA\Property(
+ *                  property="id",
+ *                  example="5",
+ *                  type="int"
+ *              ),
+ *              @OA\Property(
+ *                  property="account",
+ *                  example="121622197-9",
+ *                  type="string"
+ *              ),
+ *              @OA\Property(
+ *                  property="number",
+ *                  example="152.8",
+ *                  type="float"
+ *              )
  *          )
  *      )         
  * )
@@ -87,7 +122,7 @@ interface UserControllerDocumentation
      *     tags={"Create user"},
      *     @OA\RequestBody(
      *          required=true,
-     *          @OA\JsonContent(ref="#components/schemas/create_user_request")
+     *          @OA\JsonContent(ref="#components/schemas/user_request")
      *      ),
      *     @OA\Response(
      *          response="201", 

@@ -5,14 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class BinCodeFactory
- * @package Database\Factories
- * @method BinCode|BinCode[]|Collection create($attributes = [], ?Model $parent = null)
- * @method BinCode createOne($attributes = [])
- * @method BinCode|BinCode[]|Collection make($attributes = [], ?Model $parent = null)
- * @method BinCode makeOne($attributes = [])
-*/
 class User extends Model
 {
     use HasFactory;
@@ -31,4 +23,9 @@ class User extends Model
 
     public const CONSUMER = 'consumer';
     public const SELLER = 'seller';
+
+    public function account()
+    {
+        return $this->hasOne(Account::class);
+    }
 } 

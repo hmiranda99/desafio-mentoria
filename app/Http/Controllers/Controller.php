@@ -11,7 +11,7 @@ use Illuminate\Routing\Controller as BaseController;
  * @OA\Info(
  *      version="3.0.0",
  *      title="Desafio backend",
- *      description="Para esse desafio foi desenvolvida uma API escalável que tem como objetivo realizar transferências bancárias entre dois tipos de usuários, comuns e lojistas."
+ *      description="For this challenge, a scalable API was developed that aims to perform bank transfers between two types of users, ordinary users and shopkeepers."
  * )
  */
 class Controller extends BaseController
