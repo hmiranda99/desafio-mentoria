@@ -19,7 +19,7 @@ RUN apk update && \
     ## nano: editor de textos
     nano \
     ## php7-phpdbg: voltado para identificar e remover qualquer tipo de erro existente no código-fonte de um programa
-    php7-phpdbg
+    ##php7-phpdbg
     
 RUN apk add --no-cache $PHPIZE_DEPS \
     && pecl install xdebug \
