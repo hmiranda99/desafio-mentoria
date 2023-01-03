@@ -6,13 +6,31 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  sonarcloud:
-    name: SonarCloud
+  ci:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: .env
+        run: cp .env.example .env
+
+      - name: network
+        run: docker network create bubble
+
+      - name: Build Gatekeeper Controller
+        run: docker-compose -f docker-compose.yml up -d
+
+      - name: Composer Install
+        run: |
+          $DOCKER_EXEC apk --update add --no-cache libzip-dev
+          $DOCKER_EXEC composer install --prefer-dist
+        env: 
+          DOCKER_EXEC: docker exec desafio_php74
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
