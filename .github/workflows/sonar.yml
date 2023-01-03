@@ -6,7 +6,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  ci:
+  build:
     runs-on: ubuntu-latest
 
     steps:
