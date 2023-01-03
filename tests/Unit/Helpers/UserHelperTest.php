@@ -34,7 +34,6 @@ class UserHelperTest extends TestCase
         $this->assertIsString($response);
     }
 
-    /*
     public function testShouldDefineUserTypeAsConsumer()
     {
         $cnpj = null;
@@ -150,5 +149,5 @@ class UserHelperTest extends TestCase
 
         $this->assertNotEquals($userDto->password, $response);
         $this->assertIsString($response);
-    }*/
+    }
 }

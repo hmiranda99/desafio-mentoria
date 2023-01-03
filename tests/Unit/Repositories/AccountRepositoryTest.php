@@ -28,7 +28,6 @@ class AccountRepositoryTest extends TestCase
         $this->assertEquals($accountDto->number, $response->number);
     }
 
-    /*
     public function testShouldGetAccountByUserIdButUserNotExists()
     {
         $userDto = UserDtoFactory::userMakeRealFactory();
@@ -48,5 +47,5 @@ class AccountRepositoryTest extends TestCase
         $response = $instance->deleteAccountByUserId($user->id);
 
         $this->assertTrue($response);
-    }*/
+    }
 }
