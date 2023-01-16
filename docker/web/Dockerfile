@@ -6,11 +6,9 @@ WORKDIR /var/www/html/
 ## Dando o poder de acessar ao usuário master
 USER root
  
-RUN apk add --update --no-cache util-linux linux-headers \
-	$PHPIZE_DEPS \
-    ## apk update && \ 
+RUN apk update && \ 
     ## add: para instalar pacotes | -no-cache: para que não venha com cache | util-linux: para aceitar comandos linux
-    ## apk add --no-cache util-linux \
+    apk add --no-cache util-linux \
     ## bash: interpretador de comandos (shell)
     bash \
     git \
@@ -19,24 +17,14 @@ RUN apk add --update --no-cache util-linux linux-headers \
     ## vim: editor de textos
     vim \
     ## nano: editor de textos
-    nano
+    nano \
     ## php7-phpdbg: voltado para identificar e remover qualquer tipo de erro existente no código-fonte de um programa
-    ##php7-phpdbg
-    
-##RUN apk add --no-cache $PHPIZE_DEPS \
+    php7-phpdbg
 
-#RUN apk add --update linux-headers
-
-RUN pecl install xdebug 
-
-RUN docker-php-ext-enable xdebug
-
-RUN docker-php-ext-install \ 
-    mysqli \
-    pdo \ 
-    pdo_mysql \
-    bcmath \
-    sockets
+RUN apk add --no-cache $PHPIZE_DEPS \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && docker-php-ext-install mysqli pdo pdo_mysql bcmath sockets
 
 RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
