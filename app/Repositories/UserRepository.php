@@ -8,6 +8,8 @@ use App\Models\UserDto;
 
 class UserRepository
 {
+    protected $accountHelper;
+    
     public function __construct(AccountHelper $accountHelper)
     {
         $this->accountHelper = $accountHelper;
@@ -33,6 +35,12 @@ class UserRepository
     {
         $user = User::find($userId);
         return $user ? new UserDto($user->toArray()) : null;
+    }
+
+    public function getUserEntityById(int $userId)
+    {
+        $user = User::find($userId);
+        return $user ? $user->user_entity : null;
     }
 
     /**
