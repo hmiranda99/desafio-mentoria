@@ -15,6 +15,11 @@ use Fig\Http\Message\StatusCodeInterface;
 
 class UserController extends Controller
 {
+    protected $userRepository;
+    protected $userDtoAdapter;
+    protected $userHelper;
+    protected $accountRepository;
+
     public function __construct(
         UserRepository $userRepository,
         UserDtoAdapter $userDtoAdapter,
