@@ -19,7 +19,7 @@ class CreateUserTest extends TestCase
             'cnpj' => '41.698.459/0001-98'
         ]);
 
-        $response = $this->post('/api/create-users', $createUserDto->toArray());
+        $response = $this->post('/api/user', $createUserDto->toArray());
         $response->assertStatus(201);
         $this->assertDatabaseHas('users', [
             'email' => 'email@email.com',
@@ -38,7 +38,7 @@ class CreateUserTest extends TestCase
 
         $createUserDto = CreateUserDtoFactory::userMakeRealFactory($user->toArray());
 
-        $response = $this->post('/api/create-users', $createUserDto->toArray());
+        $response = $this->post('/api/user', $createUserDto->toArray());
         $response->assertStatus(302);
     }
 }
