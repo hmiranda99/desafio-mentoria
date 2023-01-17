@@ -17,7 +17,7 @@ class UserCannotTransactException extends Exception
     {
         return false;
     }
- 
+
     /**
      * Render the exception into an HTTP response.
      * This method returns an error message for users that do not exist.
@@ -27,7 +27,7 @@ class UserCannotTransactException extends Exception
     public function render()
     {
         return response()->json([
-            "error" => true, 
+            "error" => true,
             "message" => static::MSG_USER_CANNOT_TRANSACT
         ], StatusCodeInterface::STATUS_FORBIDDEN);
     }
