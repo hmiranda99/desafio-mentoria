@@ -39,7 +39,7 @@ class CreateTransactionDto extends Data
             'payee.exists' => 'Este recebedor não existe no banco de dados.',
             //type
             'type.required' => 'Tipo de transação é obrigatório.',
-            'type.regex' => 'Só fazemos transações do tipo P2P.',
+            'type.regex' => 'Só fazemos transações do tipo P2P.'
         ];
     } 
 }
