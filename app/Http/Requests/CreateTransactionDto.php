@@ -10,9 +10,9 @@ class CreateTransactionDto extends Data
     public int $payer;
     public int $payee;
     public string $type;
-    public ?string $transaction_hash;
+    public ?string $transactionHash;
 
-    public static function rules() 
+    public static function rules()
     {
         return [
             'value' => 'required|numeric',
@@ -41,5 +41,5 @@ class CreateTransactionDto extends Data
             'type.required' => 'Tipo de transação é obrigatório.',
             'type.regex' => 'Só fazemos transações do tipo P2P.'
         ];
-    } 
+    }
 }

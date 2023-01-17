@@ -29,7 +29,7 @@ class TransactionController extends Controller
 
     public function createTransaction(CreateTransactionDto $createTransactionDto)
     {
-        $createTransactionDto->transaction_hash = $this->transactionHelper->createHashTransaction();
+        $createTransactionDto->transactionHash = $this->transactionHelper->createHashTransaction();
 
         if (!$this->transactionHelper->canTransact($createTransactionDto->payer)) {
             $this->cancelTransaction($createTransactionDto);
@@ -38,7 +38,7 @@ class TransactionController extends Controller
 
         $this->captureTransaction($createTransactionDto);
 
-        if(!$this->transactionService->authorizeService()){
+        if (!$this->transactionService->authorizeService()) {
             $this->errorTransaction($createTransactionDto);
             throw new ServiceDownException();
         }
@@ -48,7 +48,10 @@ class TransactionController extends Controller
 
     private function captureTransaction(CreateTransactionDto $createTransactionDto)
     {
-        if (!$this->transactionHelper->haveBalanceToTransact($createTransactionDto->value, $createTransactionDto->payer)) {
+        if (!$this->transactionHelper->haveBalanceToTransact(
+            $createTransactionDto->value,
+            $createTransactionDto->payer
+        )) {
             $this->cancelTransaction($createTransactionDto);
             throw new InsufficientBalanceException();
         }

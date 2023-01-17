@@ -11,7 +11,6 @@ class UserAlreadExistsException extends Exception
     
     /**
      * Report the exception.
-     *
      * @return bool|null
      */
     public function report()
@@ -22,12 +21,14 @@ class UserAlreadExistsException extends Exception
     /**
      * Render the exception into an HTTP response.
      * This method returns an error message for users that already exist in database.
-     *
      * @param  \Illuminate\Http\Request  
      * @return \Illuminate\Http\Response
      */
     public function render()
     {
-        return response()->json(["error" => true, "message" => static::MSG_USER_ALREADY_EXISTS], StatusCodeInterface::STATUS_CONFLICT);
+        return response()->json([
+            "error" => true, 
+            "message" => static::MSG_USER_ALREADY_EXISTS
+        ], StatusCodeInterface::STATUS_CONFLICT);
     }
 }

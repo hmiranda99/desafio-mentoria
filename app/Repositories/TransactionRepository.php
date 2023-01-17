@@ -22,15 +22,19 @@ class TransactionRepository
         return $transaction->save();
     }
 
-    private function createTransactionModel(TransactionStatusEnum $status, CreateTransactionDto $createTransactionDto): Transaction
-    {
+    private function createTransactionModel(
+        TransactionStatusEnum $status,
+        CreateTransactionDto $createTransactionDto
+    ): Transaction {
         $transaction = Transaction::query()->newModelInstance();
         $transaction->value = $createTransactionDto->value;
         $transaction->user_payer_id = $createTransactionDto->payer;
         $transaction->user_payee_id = $createTransactionDto->payee;
-        $transaction->transaction_type = $this->transactionTypeRepository->getIdTransactionTypeByName(TransactionsTypesEnum::P2P);
+        $transaction->transaction_type = $this->transactionTypeRepository->getIdTransactionTypeByName(
+            TransactionsTypesEnum::P2P
+        );
         $transaction->status = $status;
-        $transaction->transaction_hash = $createTransactionDto->transaction_hash;
+        $transaction->transaction_hash = $createTransactionDto->transactionHash;
 
         return $transaction;
     }
