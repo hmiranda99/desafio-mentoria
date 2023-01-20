@@ -24,7 +24,7 @@ class UserDtoFactory extends Factory
      * @param array $attributes
      * @return DataTransferObject
      */
-    public static function userMakeRealFactory(array $attributes = [])
+    public static function makeRealFactory(array $attributes = [])
     {
         return Factory::new(self::$dtoClass)
             ->sequence(array_merge([

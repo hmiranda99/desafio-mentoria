@@ -27,4 +27,9 @@ class AccountRepository
     {
         return Account::where('user_id', 'LIKE', '%' . $userId . '%')->delete();
     }
+
+    public function updateBalanceAccount(float $balance, int $userId): bool
+    {
+        return Account::where('user_id', $userId)->update(['balance' => $balance]);
+    }
 }

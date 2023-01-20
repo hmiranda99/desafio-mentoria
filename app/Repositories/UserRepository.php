@@ -8,6 +8,8 @@ use App\Models\UserDto;
 
 class UserRepository
 {
+    protected $accountHelper;
+    
     public function __construct(AccountHelper $accountHelper)
     {
         $this->accountHelper = $accountHelper;

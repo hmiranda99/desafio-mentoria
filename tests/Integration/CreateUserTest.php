@@ -13,13 +13,13 @@ class CreateUserTest extends TestCase
 
     public function testShouldCreateUser()
     {
-        $createUserDto = CreateUserDtoFactory::userMakeRealFactory([
+        $createUserDto = CreateUserDtoFactory::makeRealFactory([
             'email' => 'email@email.com',
             'cpf' => '902.470.020-54',
             'cnpj' => '41.698.459/0001-98'
         ]);
 
-        $response = $this->post('/api/create-users', $createUserDto->toArray());
+        $response = $this->post('/api/user', $createUserDto->toArray());
         $response->assertStatus(201);
         $this->assertDatabaseHas('users', [
             'email' => 'email@email.com',
@@ -36,9 +36,9 @@ class CreateUserTest extends TestCase
             'cnpj' => '41.698.459/0001-98'
         ]);
 
-        $createUserDto = CreateUserDtoFactory::userMakeRealFactory($user->toArray());
+        $createUserDto = CreateUserDtoFactory::makeRealFactory($user->toArray());
 
-        $response = $this->post('/api/create-users', $createUserDto->toArray());
+        $response = $this->post('/api/user', $createUserDto->toArray());
         $response->assertStatus(302);
     }
 }

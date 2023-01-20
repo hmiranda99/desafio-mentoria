@@ -47,7 +47,7 @@ class UserHelperTest extends TestCase
     public function testShouldHaveUserInDatabase()
     {
         $userId = 1;
-        $userDto = UserDtoFactory::userMakeRealFactory(['id' => $userId]);
+        $userDto = UserDtoFactory::makeRealFactory(['id' => $userId]);
 
         $this->userRepository
             ->expects($this->once())
@@ -82,7 +82,7 @@ class UserHelperTest extends TestCase
 
     public function testShouldHaveApplyRulesInUpdate()
     {
-        $userDto = UserDtoFactory::userMakeRealFactory(['cnpj' => '54.674.564/0001-39', 'cpf' => '271.846.355-40']);
+        $userDto = UserDtoFactory::makeRealFactory(['cnpj' => '54.674.564/0001-39', 'cpf' => '271.846.355-40']);
         $message = response()->json(["email" => "The email must be a valid email address."]);
         $request = new Request($userDto->toArray());
         
@@ -96,7 +96,7 @@ class UserHelperTest extends TestCase
 
     public function testShouldDontHaveApplyRulesInUpdate()
     {
-        $userDto = UserDtoFactory::userMakeRealFactory([
+        $userDto = UserDtoFactory::makeRealFactory([
             'email' => 'email@email.com',
             'cnpj' => '54.674.564/0001-39',
             'cpf' => '271.846.355-40'
@@ -115,7 +115,7 @@ class UserHelperTest extends TestCase
         $password = "$2y$04udJz4ZISd27/d8Td3GRoserpoizlqFCPpTYR3KXtSaaPjxsa0uEOO";
 
         User::factory()->createOne(['id' => $userId, 'password' => $password]);
-        $userDto = UserDtoFactory::userMakeRealFactory(['id' => $userId, 'password' => $password]);
+        $userDto = UserDtoFactory::makeRealFactory(['id' => $userId, 'password' => $password]);
 
         $this->userRepository
             ->expects($this->once())
@@ -136,7 +136,7 @@ class UserHelperTest extends TestCase
         $password = "$2y$04udJz4ZISd27/d8Td3GRoserpoizlqFCPpTYR3KXtSaaPjxsa0uEOO";
 
         User::factory()->createOne(['id' => $userId]);
-        $userDto = UserDtoFactory::userMakeRealFactory(['id' => $userId]);
+        $userDto = UserDtoFactory::makeRealFactory(['id' => $userId]);
 
         $this->userRepository
             ->expects($this->once())

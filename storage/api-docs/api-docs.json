@@ -6,6 +6,43 @@
         "version": "3.0.0"
     },
     "paths": {
+        "/api/transaction": {
+            "post": {
+                "tags": [
+                    "Create Transaction"
+                ],
+                "summary": "Create a transaction",
+                "description": "This endpoint creates a transaction.",
+                "operationId": "66ba373f920b38b37274440e31b6f6ec",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/transaction_request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Transaction created successfully."
+                    },
+                    "400": {
+                        "description": "Insufficient balance."
+                    },
+                    "403": {
+                        "description": "Seller entity users cannot transact, only receive."
+                    },
+                    "409": {
+                        "description": "Payer and payee cannot be the same."
+                    },
+                    "500": {
+                        "description": "The service is temporarily down."
+                    }
+                }
+            }
+        },
         "/api/create-users": {
             "post": {
                 "tags": [
@@ -232,6 +269,26 @@
                             }
                         },
                         "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "transaction_request": {
+                "properties": {
+                    "value": {
+                        "description": "Value of transaction.",
+                        "type": "integer",
+                        "example": "100"
+                    },
+                    "payer": {
+                        "description": "User ID",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "payee": {
+                        "description": "User ID",
+                        "type": "integer",
+                        "example": "2"
                     }
                 },
                 "type": "object"

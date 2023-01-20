@@ -5,9 +5,9 @@ namespace App\Exceptions\UsersExceptions;
 use Exception;
 use Fig\Http\Message\StatusCodeInterface;
 
-class UserNotExistsException extends Exception
+class EqualsUsersException extends Exception
 {
-    public const MSG_USER_NOT_EXISTS = 'This user does not exist in the database.';
+    public const MSG_EQUALS_USERS_EXISTS = 'Payer and payee cannot be the same.';
 
     /**
      * Report the exception.
@@ -20,15 +20,15 @@ class UserNotExistsException extends Exception
 
     /**
      * Render the exception into an HTTP response.
-     * This method returns an error message for users that do not exist.
-     * @param  \Illuminate\Http\Request  
+     * This method returns an error message for users that already exist in database.
+     * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
     public function render()
     {
         return response()->json([
             "error" => true,
-            "message" => static::MSG_USER_NOT_EXISTS
-        ], StatusCodeInterface::STATUS_BAD_REQUEST);
+            "message" => static::MSG_EQUALS_USERS_EXISTS
+        ], StatusCodeInterface::STATUS_CONFLICT);
     }
 }

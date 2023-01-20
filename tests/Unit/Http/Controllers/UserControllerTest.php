@@ -40,8 +40,8 @@ class UserControllerTest extends TestCase
     public function testShouldCreateUser()
     {
         $passwordEncrypt = '$2y$10$/UIAUCtO9gQaCXp5cQJj6eL332sMUzJDDu/6m31ZeJ9Oj1pkJNA3.';
-        $createUserDto = CreateUserDtoFactory::userMakeRealFactory(['password' => '1234567', 'user_entity' => User::SELLER]);
-        $userDto = UserDtoFactory::userMakeRealFactory($createUserDto->toArray());
+        $createUserDto = CreateUserDtoFactory::makeRealFactory(['password' => '1234567', 'user_entity' => User::SELLER]);
+        $userDto = UserDtoFactory::makeRealFactory($createUserDto->toArray());
         $accountDto = AccountDtoFactory::accountMakeRealFactory();
 
         $this->userRepository
@@ -91,7 +91,7 @@ class UserControllerTest extends TestCase
     {
         $createUserDto = CreateUserDtoFactory::userMakeFactory();
         User::factory()->createOne($createUserDto->toArray());
-        $userDto = UserDtoFactory::userMakeRealFactory($createUserDto->toArray());
+        $userDto = UserDtoFactory::makeRealFactory($createUserDto->toArray());
 
         $this->userRepository
             ->expects($this->once())
@@ -110,7 +110,7 @@ class UserControllerTest extends TestCase
     public function testShouldGetUserById()
     {
         $user = User::factory()->createOne();
-        $userDto = UserDtoFactory::userMakeRealFactory();
+        $userDto = UserDtoFactory::makeRealFactory();
         $accountDto = AccountDtoFactory::accountMakeRealFactory();
 
         $this->accountRepository
@@ -153,7 +153,7 @@ class UserControllerTest extends TestCase
     public function testShouldDeleteUser()
     {
         $user = User::factory()->createOne();
-        $userDto = UserDtoFactory::userMakeRealFactory();
+        $userDto = UserDtoFactory::makeRealFactory();
 
         $this->userHelper
             ->expects($this->once())
@@ -201,7 +201,7 @@ class UserControllerTest extends TestCase
     public function testShouldUpdateUser()
     {
         $user = User::factory()->createOne();
-        $userDto = UserDtoFactory::userMakeRealFactory();
+        $userDto = UserDtoFactory::makeRealFactory();
         $request = new Request($user->toArray());
 
         $this->userHelper
