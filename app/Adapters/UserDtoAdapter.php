@@ -19,9 +19,9 @@ class UserDtoAdapter
             'name' => $dataUserObject->name ?? $dataUserArray['name'],
             'email' => $dataUserObject->email ?? $dataUserArray['email'],
             'password' => $dataUserArray['password'] ?? $dataUserObject->password,
-            'cnpj' => !empty($dataUserObject->cnpj) ? $dataUserObject->cnpj : 
+            'cnpj' => !empty($dataUserObject->cnpj) ? $dataUserObject->cnpj :
                         (!empty($dataUserArray['cnpj']) ? $dataUserArray['cnpj'] : null),
-            'cpf' => !empty($dataUserObject->cpf) ? $dataUserObject->cpf : 
+            'cpf' => !empty($dataUserObject->cpf) ? $dataUserObject->cpf :
                         (!empty($dataUserArray['cpf']) ? $dataUserArray['cpf'] : null),
             'user_entity' => $dataUserObject->user_entity ?? $dataUserArray['user_entity']
         ];

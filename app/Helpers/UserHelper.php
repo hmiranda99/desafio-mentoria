@@ -58,16 +58,16 @@ class UserHelper
             'name' => 'required|string|min:2|max:80',
             'email' => ['required', 'email:rfc,dns', Rule::unique('users')->ignore($userDto->id)],
             'cnpj' => [
-                'max:18', 
-                'required_without:cpf', 
-                'nullable', 
+                'max:18',
+                'required_without:cpf',
+                'nullable',
                 Rule::unique('users')->ignore($userDto->id),
-                 new CnpjUser
+                new CnpjUser
             ],
             'cpf' => [
-                'max:14', 
-                'required_without:cnpj', 
-                'nullable', 
+                'max:14',
+                'required_without:cnpj',
+                'nullable',
                 Rule::unique('users')->ignore($userDto->id), 
                 new CpfUser
             ]
