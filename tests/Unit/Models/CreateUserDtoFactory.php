@@ -23,7 +23,7 @@ class CreateUserDtoFactory extends Factory
      * @param array $attributes
      * @return CreateUserDto
      */
-    public static function userMakeRealFactory(array $attributes = []): CreateUserDto
+    public static function makeRealFactory(array $attributes = []): CreateUserDto
     {
         return Factory::new(self::$dtoClass)
             ->sequence(array_merge([

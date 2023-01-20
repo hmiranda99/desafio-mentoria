@@ -20,7 +20,8 @@ class AccountDtoFactory extends Factory
             ->sequence(array_merge([
                 'id' => FakerMap::faker()->unique()->randomNumber(2),
                 'number' => FakerMap::faker()->numerify('#########'),
-                'balance' => FakerMap::faker()->randomFloat(2, 100, 200)
+                'balance' => FakerMap::faker()->randomFloat(2, 100, 200),
+                'user_id' => FakerMap::faker()->unique()->randomNumber(2)
             ], $attributes))
             ->make();
     }

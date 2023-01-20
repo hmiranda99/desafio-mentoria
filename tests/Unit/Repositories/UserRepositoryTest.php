@@ -26,7 +26,7 @@ class UserRepositoryTest extends TestCase
     public function testShouldGetUserByEmail()
     {
         $user = User::factory()->createOne();
-        $userDto = UserDtoFactory::userMakeRealFactory($user->toArray());
+        $userDto = UserDtoFactory::makeRealFactory($user->toArray());
 
         $instance = new UserRepository($this->accountHelper);
         $response = $instance->getUserByEmail($user->email);
@@ -37,7 +37,7 @@ class UserRepositoryTest extends TestCase
 
     public function testShouldGetUserByEmailButUserNotExists()
     {
-        $userDto = UserDtoFactory::userMakeRealFactory();
+        $userDto = UserDtoFactory::makeRealFactory();
 
         $instance = new UserRepository($this->accountHelper);
         $response = $instance->getUserByEmail($userDto->email);
@@ -48,7 +48,7 @@ class UserRepositoryTest extends TestCase
     public function testShouldGetUserById()
     {
         $user = User::factory()->createOne();
-        $userDto = UserDtoFactory::userMakeRealFactory($user->toArray());
+        $userDto = UserDtoFactory::makeRealFactory($user->toArray());
 
         $instance = new UserRepository($this->accountHelper);
         $response = $instance->getUserById($user->id);
@@ -59,7 +59,7 @@ class UserRepositoryTest extends TestCase
 
     public function testShouldGetUserByIdButUserNotExists()
     {
-        $userDto = UserDtoFactory::userMakeRealFactory();
+        $userDto = UserDtoFactory::makeRealFactory();
 
         $instance = new UserRepository($this->accountHelper);
         $response = $instance->getUserById($userDto->id);
@@ -79,7 +79,7 @@ class UserRepositoryTest extends TestCase
             ->method('accountUserData')
             ->willReturn($array);
 
-        $userDto = UserDtoFactory::userMakeRealFactory();
+        $userDto = UserDtoFactory::makeRealFactory();
         $userDto->id = null;
 
         $instance = new UserRepository($this->accountHelper);
@@ -105,7 +105,7 @@ class UserRepositoryTest extends TestCase
     public function testShouldUpdateUser()
     {
         $user = User::factory()->createOne();
-        $userDto = UserDtoFactory::userMakeRealFactory($user->toArray());
+        $userDto = UserDtoFactory::makeRealFactory($user->toArray());
 
         $instance = new UserRepository($this->accountHelper);
         $response = $instance->updateUser($userDto, $userDto->id);

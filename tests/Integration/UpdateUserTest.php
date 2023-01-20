@@ -40,7 +40,7 @@ class UpdateUserTest extends TestCase
     {
         $message = response()->json(["error" => true, "message" => "This user does not exist in the database."]);
 
-        $userDto = UserDtoFactory::userMakeRealFactory([
+        $userDto = UserDtoFactory::makeRealFactory([
             'email' => 'email@email.com',
             'cpf' => '902.470.020-54',
             'cnpj' => '41.698.459/0001-98'

@@ -30,7 +30,7 @@ class AccountRepositoryTest extends TestCase
 
     public function testShouldGetAccountByUserIdButUserNotExists()
     {
-        $userDto = UserDtoFactory::userMakeRealFactory();
+        $userDto = UserDtoFactory::makeRealFactory();
 
         $instance = new AccountRepository();
         $response = $instance->getAccountByUserId($userDto->id);
@@ -45,6 +45,18 @@ class AccountRepositoryTest extends TestCase
 
         $instance = new AccountRepository();
         $response = $instance->deleteAccountByUserId($user->id);
+
+        $this->assertTrue($response);
+    }
+
+    public function testShouldUpdateBalanceAccount()
+    {
+        $newBalance = '100';
+        $user = User::factory()->createOne();
+        Account::factory()->createOne(['user_id' => $user->id]);
+
+        $instance = new AccountRepository();
+        $response = $instance->updateBalanceAccount($newBalance, $user->id);
 
         $this->assertTrue($response);
     }
