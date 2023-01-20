@@ -1,4 +1,5 @@
-<!-- Nome da PR [PLAC - <número>] <Nome da trarefa> -->
+<!-- Título para PR -->
+<!-- [DEV - <número>] <Nome da trarefa> -->
 
 ### Motivo da PR
 
@@ -9,7 +10,3 @@
 
 ##
 ### Como testar
-
-
-##
-- [ ] A task já está em QA :tada:
