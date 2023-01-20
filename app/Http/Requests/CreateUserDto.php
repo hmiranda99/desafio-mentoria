@@ -15,7 +15,7 @@ class CreateUserDto extends Data
     public ?string $cpf;
     public ?string $user_entity;
     
-    public static function rules() 
+    public static function rules()
     {
         return [
             'name' => 'required|string|min:2|max:80',
@@ -51,5 +51,5 @@ class CreateUserDto extends Data
             'cpf.max' => 'Limite de 14 caracteres, digite novamente.',
             'cpf.required_without' => 'Campo CPF vazio.'
         ];
-    } 
+    }
 }

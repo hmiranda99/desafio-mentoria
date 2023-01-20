@@ -35,7 +35,6 @@ interface TransactionControllerDocumentation
     /**
      * @param CreateTransactionDto $createTransactionDto
      * @return  Response
-     * 
      * @OA\Post(
      *     path="/api/transaction",
      *     summary="Create a transaction",
@@ -46,23 +45,23 @@ interface TransactionControllerDocumentation
      *          @OA\JsonContent(ref="#components/schemas/transaction_request")
      *      ),
      *     @OA\Response(
-     *          response="201", 
+     *          response="201",
      *          description="Transaction created successfully."
      *      ),
      *      @OA\Response(
-     *          response="400", 
+     *          response="400",
      *          description="Insufficient balance."
      *      ),
      *      @OA\Response(
-     *          response="403", 
+     *          response="403",
      *          description="Seller entity users cannot transact, only receive."
      *      ),
      *      @OA\Response(
-     *          response="409", 
+     *          response="409",
      *          description="Payer and payee cannot be the same."
      *      ),
      *      @OA\Response(
-     *          response="500", 
+     *          response="500",
      *          description="The service is temporarily down."
      *      )
      * )

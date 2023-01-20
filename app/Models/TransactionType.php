@@ -10,5 +10,5 @@ class TransactionType extends Model
     use HasFactory;
 
     protected $table = 'transactions_types';
-    protected $guarded = []; 
+    protected $guarded = [];
 }

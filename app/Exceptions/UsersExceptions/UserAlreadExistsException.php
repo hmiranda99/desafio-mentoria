@@ -21,7 +21,7 @@ class UserAlreadExistsException extends Exception
     /**
      * Render the exception into an HTTP response.
      * This method returns an error message for users that already exist in database.
-     * @param  \Illuminate\Http\Request  
+     * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
     public function render()
