@@ -13,8 +13,8 @@ class User extends Model
 
     protected $fillable = [
         'id' => 'int',
-        'name' => 'string', 
-        'email' => 'string', 
+        'name' => 'string',
+        'email' => 'string',
         'password' => 'string',
         'user_entity' => 'string',
         'cpf' => 'string',
@@ -28,4 +28,4 @@ class User extends Model
     {
         return $this->hasOne(Account::class);
     }
-} 
+}

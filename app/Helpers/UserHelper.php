@@ -2,18 +2,20 @@
 
 namespace App\Helpers;
 
+use App\Rules\CpfUser;
+use App\Models\UserDto;
+use App\Rules\CnpjUser;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Exception;
+use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use App\Rules\CpfUser;
-use App\Rules\CnpjUser;
-use App\Models\UserDto;
 use App\Exceptions\UsersExceptions\UserNotExistsException;
-use App\Repositories\UserRepository;
 
 class UserHelper
 {
+    protected $userRepository;
 
     public function __construct(UserRepository $userRepository)
     {
@@ -22,7 +24,6 @@ class UserHelper
 
     /**
      * This method defines the type of the user.
-     * 
      * @param ?string $documentUser
      * @return string
      */
@@ -33,7 +34,6 @@ class UserHelper
 
     /**
      * This method checks if the user exists in the database.
-     * 
      * @param int $userId
      * @return ?UserDto
      */
@@ -48,7 +48,6 @@ class UserHelper
 
     /**
      * This method checks the rules for updating user data.
-     * 
      * @param Request $request
      * @param UserDto $userDto
      * @return void
@@ -58,18 +57,29 @@ class UserHelper
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:2|max:80',
             'email' => ['required', 'email:rfc,dns', Rule::unique('users')->ignore($userDto->id)],
-            'cnpj' => ['max:18', 'required_without:cpf', 'nullable', Rule::unique('users')->ignore($userDto->id), new CnpjUser],
-            'cpf' => ['max:14', 'required_without:cnpj', 'nullable', Rule::unique('users')->ignore($userDto->id), new CpfUser]
+            'cnpj' => [
+                'max:18', 
+                'required_without:cpf', 
+                'nullable', 
+                Rule::unique('users')->ignore($userDto->id),
+                 new CnpjUser
+            ],
+            'cpf' => [
+                'max:14', 
+                'required_without:cnpj', 
+                'nullable', 
+                Rule::unique('users')->ignore($userDto->id), 
+                new CpfUser
+            ]
         ]);
 
         if ($validator->fails()) {
-            throw new \Exception($validator->errors());
+            throw new Exception($validator->errors());
         }
     }
 
     /**
      * This method checks if the user has entered a new password on update.
-     * 
      * @param string $newPassword
      * @param int $userId
      * @return string
@@ -87,7 +97,6 @@ class UserHelper
 
     /**
      * This method encrypts the user password.
-     * 
      * @param string $password
      * @return string
      */

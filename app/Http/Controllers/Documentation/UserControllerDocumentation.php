@@ -42,7 +42,6 @@ use App\Http\Requests\CreateUserDto;
  *              type="string"
  *          )
  *      ),
- * 
  *      @OA\Schema(
  *          schema="user_response",
  *          type="object",
@@ -105,7 +104,7 @@ use App\Http\Requests\CreateUserDto;
  *                  type="float"
  *              )
  *          )
- *      )         
+ *      )       
  * )
  */
 
@@ -114,7 +113,6 @@ interface UserControllerDocumentation
     /**
      * @param CreateUserDto $createUserDto
      * @return  Response
-     * 
      * @OA\Post(
      *     path="/api/create-users",
      *     summary="Create a new user",
@@ -125,12 +123,12 @@ interface UserControllerDocumentation
      *          @OA\JsonContent(ref="#components/schemas/user_request")
      *      ),
      *     @OA\Response(
-     *          response="201", 
+     *          response="201",
      *          description="User created successfully.",
      *          @OA\JsonContent(ref="#components/schemas/user_response")
      *      ),
      *      @OA\Response(
-     *          response="409", 
+     *          response="409",
      *          description="User already exists."
      *      )
      * )
@@ -140,7 +138,6 @@ interface UserControllerDocumentation
     /**
      * @param int $userId
      * @return  Response
-     * 
      * @OA\Get(
      *     path="/api/list/user/{id}",
      *     summary="Get user by id.",
@@ -156,12 +153,12 @@ interface UserControllerDocumentation
      *         )
      *      ),
      *     @OA\Response(
-     *          response="200", 
+     *          response="200",
      *          description="",
      *          @OA\JsonContent(ref="#components/schemas/user_response")
      *      ),
      *      @OA\Response(
-     *          response="400", 
+     *          response="400",
      *          description="This user does not exist in the database."
      *      )
      * )
@@ -172,7 +169,6 @@ interface UserControllerDocumentation
      * @param int $userId
      * @param Request $request
      * @return  Response
-     * 
      * @OA\Put(
      *     path="/api/update/user/{id}",
      *     summary="Update user by id.",
@@ -192,11 +188,11 @@ interface UserControllerDocumentation
      *          @OA\JsonContent(ref="#components/schemas/user_request")
      *      ),
      *     @OA\Response(
-     *          response="204", 
+     *          response="204",
      *          description="No content."
      *      ),
      *      @OA\Response(
-     *          response="400", 
+     *          response="400",
      *          description="This user does not exist in the database."
      *      )
      * )
@@ -206,7 +202,6 @@ interface UserControllerDocumentation
     /**
      * @param int $userId
      * @return  Response
-     * 
      * @OA\Delete(
      *     path="/api/delete/user/{id}",
      *     summary="Delete user by id.",
@@ -222,11 +217,11 @@ interface UserControllerDocumentation
      *         )
      *      ),
      *     @OA\Response(
-     *          response="204", 
+     *          response="204",
      *          description="No content."
      *      ),
      *      @OA\Response(
-     *          response="400", 
+     *          response="400",
      *          description="This user does not exist in the database."
      *      )
      * )
