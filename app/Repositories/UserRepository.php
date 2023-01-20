@@ -37,12 +37,6 @@ class UserRepository
         return $user ? new UserDto($user->toArray()) : null;
     }
 
-    public function getUserEntityById(int $userId)
-    {
-        $user = User::find($userId);
-        return $user ? $user->user_entity : null;
-    }
-
     /**
      * This method inserts user data into the database.
      * @param UserDto $userDto

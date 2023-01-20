@@ -9,4 +9,5 @@ class AccountDto extends DataTransferObject
     public ?int $id;
     public ?string $number;
     public ?float $balance;
+    public ?int $user_id;
 }

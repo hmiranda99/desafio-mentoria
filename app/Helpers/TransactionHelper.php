@@ -34,9 +34,9 @@ class TransactionHelper
 
     public function canTransact(int $payer): bool
     {
-        $userEntity = $this->userRepository->getUserEntityById($payer);
+        $userEntity = $this->userRepository->getUserById($payer);
 
-        return $userEntity == User::CONSUMER ?? false;
+        return $userEntity->user_entity == User::CONSUMER ?? false;
     }
 
     public function haveBalanceToTransact(float $transactionValue, int $payer): bool | float
