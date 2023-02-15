@@ -5,7 +5,7 @@ namespace App\Services\ServiceAuthorizer;
 use Illuminate\Support\Facades\Http;
 use Fig\Http\Message\StatusCodeInterface;
 
-class AuthorizerService
+class ServiceAuthorizer
 {
     private $url;
 
@@ -16,14 +16,9 @@ class AuthorizerService
         $this->url = (string) env(self::ENV_URL_SERVICE_AUTHORIZER);
     }
 
-    public function checkAuthorizer()
+    public function getAuthorizer()
     {
         $response = Http::withOptions(['verify' => false])->get($this->url);
-        return $this->checkStatusCode($response->status());
-    }
-
-    private function checkStatusCode(int $statusCode)
-    {
-        return $statusCode == StatusCodeInterface::STATUS_OK ?? null;
+        return $response->status();
     }
 }

@@ -2,61 +2,38 @@
 
 namespace App\Services;
 
-use App\Enums\TransactionStatusEnum;
-use App\Http\Requests\CreateTransactionDto;
-use App\Repositories\TransactionRepository;
-use App\Services\ServiceAuthorizer\AuthorizerService;
-use App\Exceptions\TransactionsExceptions\InsufficientBalanceException;
-use App\Helpers\TransactionHelper;
+use Fig\Http\Message\StatusCodeInterface;
+use App\Services\ServiceAuthorizer\ServiceAuthorizer;
+use App\Exceptions\ServicesExceptions\ServiceDownException;
 
 class TransactionService
 {
     protected $serviceAuthorizer;
-    protected $transactionRepository;
-    protected $transactionHelper;
 
-    public function __construct(
-        AuthorizerService $serviceAuthorizer,
-        TransactionRepository $transactionRepository,
-        TransactionHelper $transactionHelper
-    ) {
+    public function __construct(ServiceAuthorizer $serviceAuthorizer)
+    {
         $this->serviceAuthorizer = $serviceAuthorizer;
-        $this->transactionRepository = $transactionRepository;
-        $this->transactionHelper = $transactionHelper;
     }
 
     public function authorizeService()
     {
-        return $this->serviceAuthorizer->checkAuthorizer();
+        $serviceAuthorizer = $this->serviceAuthorizer->getAuthorizer();
+        return $this->checkAuthorizer($serviceAuthorizer);
     }
 
-    public function captureTransaction(CreateTransactionDto $createTransactionDto)
+    private function checkAuthorizer(int $statusCode)
     {
-        if (!$this->transactionHelper->haveBalanceToTransact(
-            $createTransactionDto->value,
-            $createTransactionDto->payer
-        )) {
-            $this->cancelTransaction($createTransactionDto);
-            throw new InsufficientBalanceException();
+        if ($statusCode == StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR) {
+            return throw new ServiceDownException();
         }
 
-        return $this->transactionRepository->registerTransaction(TransactionStatusEnum::CAP, $createTransactionDto);
-    }
+        if (
+            $statusCode != StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR &&
+            $statusCode != StatusCodeInterface::STATUS_OK
+        ) {
+            return false;
+        }
 
-    public function cancelTransaction(CreateTransactionDto $createTransactionDto)
-    {
-        return $this->transactionRepository->registerTransaction(TransactionStatusEnum::NOT, $createTransactionDto);
-    }
-
-    public function errorTransaction(CreateTransactionDto $createTransactionDto)
-    {
-        $this->transactionRepository->registerTransaction(TransactionStatusEnum::ERR, $createTransactionDto);
-        return $this->transactionHelper->prepareAddBalance($createTransactionDto->payer, $createTransactionDto->value);
-    }
-
-    public function authorizeTransaction(CreateTransactionDto $createTransactionDto)
-    {
-        $this->transactionRepository->registerTransaction(TransactionStatusEnum::AUT, $createTransactionDto);
-        return $this->transactionHelper->prepareAddBalance($createTransactionDto->payee, $createTransactionDto->value);
+        return true;
     }
 }

@@ -9,9 +9,7 @@ class TransactionStatusEnumTest extends TestCase
 {
     public function testEnum()
     {
-        $this->assertEquals('AUT', TransactionStatusEnum::AUT->value);
-        $this->assertEquals('CAP', TransactionStatusEnum::CAP->value);
-        $this->assertEquals('NOT', TransactionStatusEnum::NOT->value);
-        $this->assertEquals('ERR', TransactionStatusEnum::ERR->value);
+        $this->assertEquals('Authorized', TransactionStatusEnum::AUT->value);
+        $this->assertEquals('Not completed', TransactionStatusEnum::NOT->value);
     }
 }

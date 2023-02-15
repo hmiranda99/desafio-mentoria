@@ -46,7 +46,9 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'read' => [
-                'host' => explode(',', env('DB_HOST_READ', env('DB_HOST'))),
+                'host' => [
+                    env('DB_HOST_WRITE', env('DB_HOST'))
+                ],
             ],
             'write' => [
                 'host' => [
