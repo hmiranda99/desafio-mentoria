@@ -38,7 +38,6 @@ class TransactionRepository
         $transaction->user_payee_id = $createTransactionDto->payee;
         $transaction->transaction_type = $transactionTypeId;
         $transaction->status = $status;
-        $transaction->transaction_hash = $createTransactionDto->transactionHash;
 
         return $transaction;
     }

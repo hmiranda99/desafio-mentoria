@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('transaction_hash', 200)->index();
             $table->string('status', 60)->index();
             $table->float('value', 10, 2);
             $table->unsignedInteger('user_payer_id');
