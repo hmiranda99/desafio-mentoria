@@ -11,6 +11,7 @@ use App\Http\Requests\CreateTransactionDto;
 use App\Repositories\TransactionRepository;
 use App\Exceptions\TransactionsExceptions\TransactionNotAuthorizedException;
 use App\Helpers\TransactionHelper;
+use App\Jobs\FinishEmailTransactionJob;
 
 class TransactionController extends Controller
 {
@@ -44,6 +45,8 @@ class TransactionController extends Controller
         }
 
         $this->authorizeTransaction($createTransactionDto);
+
+        FinishEmailTransactionJob::dispatch();
 
         return response(null, StatusCodeInterface::STATUS_CREATED);
     }
