@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -38,5 +39,7 @@ class FinishEmailTransactionJob implements ShouldQueue
         if ($response['message'] != 'Success') {
             throw new ServiceDownException();
         }
+
+        Log::info("Email successfully sent!");
     }
 }
