@@ -3,7 +3,6 @@
 namespace App\Services\ServiceAuthorizer;
 
 use Illuminate\Support\Facades\Http;
-use Fig\Http\Message\StatusCodeInterface;
 
 class ServiceAuthorizer
 {
