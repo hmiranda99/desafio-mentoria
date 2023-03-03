@@ -12,7 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use App\Exceptions\ServicesExceptions\ServiceDownException;
 
-class FinalTransactionEmail implements ShouldQueue
+class FinalTransactionEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
