@@ -60,5 +60,24 @@ services:
     networks:
       - bubble
 
+#Redis Service
+  redis:
+    image: redis:4-alpine
+    container_name: desafio_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - bubble
+
+  #npm:
+  #  image: node:${NODE_VERSION}
+  #  container_name: npm
+  #  working_dir: /var/www/html/desafio
+  #  volumes:
+  #    - ./:/var/www/html/desafio
+  #  command: "npm start" 
+  #  networks:
+  #    - bubble
+
 networks:
   bubble:

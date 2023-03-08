@@ -19,12 +19,18 @@ RUN apk update && \
     ## nano: editor de textos
     nano \
     ## php7-phpdbg: voltado para identificar e remover qualquer tipo de erro existente no código-fonte de um programa
-    php7-phpdbg
+    php7-phpdbg \
+    supervisor \
+    nodejs \
+    npm \
+    sudo
 
-RUN apk add --no-cache $PHPIZE_DEPS \
-    && pecl install xdebug \
+RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \ 
+    && apk add --update linux-headers \
+    && pecl install xdebug-3.1.5 \
     && docker-php-ext-enable xdebug \
-    && docker-php-ext-install mysqli pdo pdo_mysql bcmath sockets
+    && apk del -f .build-deps \
+    && docker-php-ext-install mysqli pdo pdo_mysql bcmath sockets pcntl
 
 RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
@@ -59,7 +65,29 @@ RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm /var/log/lastlog /var/log/faillog \
     rm -rf /var/cache/apk/*
 
+RUN chown root:root .
+
+# nodejs
+#RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+#    apk add nodejs
+
+#ENV NODE_VERSION=18.14.2
+#RUN apt install -y curl
+#RUN curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+#ENV NVM_DIR=/root/.nvm
+#RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
+#RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
+#RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
+#ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+#RUN node --version
+#RUN npm --version
+
+
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 # Expose port 9000 and start php-fpm server
 CMD ["php-fpm"]
+#CMD ["php-fpm", "npm start"]
+#CMD ["php-fpm"]
 
 EXPOSE 9000
