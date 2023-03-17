@@ -1,7 +1,7 @@
 FROM php:8.1-fpm-alpine
 
 ## Definindo o diretório principal
-WORKDIR /var/www/html/
+WORKDIR /var/www/html/desafio
 
 ## Dando o poder de acessar ao usuário master
 USER root
@@ -19,12 +19,15 @@ RUN apk update && \
     ## nano: editor de textos
     nano \
     ## php7-phpdbg: voltado para identificar e remover qualquer tipo de erro existente no código-fonte de um programa
-    php7-phpdbg
+    php7-phpdbg \
+    supervisor
 
-RUN apk add --no-cache $PHPIZE_DEPS \
-    && pecl install xdebug \
+RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \ 
+    && apk add --update linux-headers \
+    && pecl install xdebug-3.1.5 \
     && docker-php-ext-enable xdebug \
-    && docker-php-ext-install mysqli pdo pdo_mysql bcmath sockets
+    && apk del -f .build-deps \
+    && docker-php-ext-install mysqli pdo pdo_mysql bcmath sockets pcntl
 
 RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
@@ -59,7 +62,11 @@ RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm /var/log/lastlog /var/log/faillog \
     rm -rf /var/cache/apk/*
 
-# Expose port 9000 and start php-fpm server
-CMD ["php-fpm"]
+RUN chown -R docker:docker /var/www/html/desafio/
+RUN chmod -R 775 /var/www/html/desafio/
+
+COPY . /var/www/html/desafio
+
+ADD supervisord.conf /etc/supervisor/supervisord.conf
 
 EXPOSE 9000

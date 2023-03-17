@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.9'
 
 volumes:
   vol-db-desafio: 
@@ -6,18 +6,21 @@ volumes:
 
 services:
 #PHP Service
-  php74:
+  php:
+    image: app
     build:
       context: ./docker/web
-    container_name: desafio_php74
+    container_name: desafio_php
     tty: true
     working_dir: /var/www/html/desafio
     volumes:
       - ./:/var/www/html/desafio
+      - ./docker/web/supervisord.conf:/etc/supervisor/supervisord.conf
     networks:
       - bubble
     expose:
       - "9000"
+    command: ["php-fpm"]
 
 #Nginx Service
   nginx:
@@ -32,7 +35,7 @@ services:
     networks:
       - bubble
     depends_on:
-      - php74
+      - php
 
 #Mysql Service
   db:
@@ -49,7 +52,7 @@ services:
       - bubble
 
 #Phpmyadmin Service
-  app:
+  phpmyadmin:
     container_name: desafio_phpmyadmin
     restart: always
     links:
@@ -60,13 +63,31 @@ services:
     networks:
       - bubble
 
-  redis:
-    image: redis:4-alpine
-    container_name: desafio_redis
+#RabbitMq Service
+  rabbitmq:
+    image: rabbitmq:3.7-management-alpine
+    container_name: desafio_rabbitmq
     ports:
-      - "6379:6379"
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
     networks:
       - bubble
+
+#Supervisor Service
+  supervisor:
+    container_name: desafio_supervisor
+    image: app
+    networks:
+      - bubble
+    depends_on:
+      - php
+      - nginx
+    command: ["supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
+    volumes:
+      - ./:/var/www/html/desafio
 
 networks:
   bubble:
