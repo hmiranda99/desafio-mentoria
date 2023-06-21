@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Adapters\UserDtoAdapter;
+use App\Helpers\UserHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Exceptions\UsersExceptions\UserAlreadExistsException;
-use App\Helpers\UserHelper;
+use App\Adapters\UserDtoAdapter;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserDto;
 use App\Http\Resources\UserResource;
-use App\Repositories\AccountRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\AccountRepository;
 use Fig\Http\Message\StatusCodeInterface;
+use App\Exceptions\UsersExceptions\UserAlreadExistsException;
 
 class UserController extends Controller
 {

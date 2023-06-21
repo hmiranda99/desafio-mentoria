@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Transaction;
 use App\Enums\TransactionStatusEnum;
-use App\Enums\TransactionsTypesEnum;
 use App\Http\Requests\CreateTransactionDto;
 
 class TransactionRepository
@@ -16,7 +15,13 @@ class TransactionRepository
         $this->transactionTypeRepository = $transactionTypeRepository;
     }
 
-    public function registerTransaction(TransactionStatusEnum $status, CreateTransactionDto $createTransactionDto)
+    /**
+     * This method is responsible for preparing the data for insertion into the database.
+     * @param TransactionStatusEnum $status
+     * @param CreatetransactionDto $createtransactionDto
+     * @return bool
+     */
+    public function registerTransaction(TransactionStatusEnum $status, CreateTransactionDto $createTransactionDto): bool
     {
         $transactionTypeId = $this->transactionTypeRepository->getIdTransactionTypeByName(
             $createTransactionDto->type
@@ -27,6 +32,13 @@ class TransactionRepository
         return $transaction->save();
     }
 
+    /**
+     * This method is responsible for preparing the data for insertion into the database.
+     * @param TransactionStatusEnum $status
+     * @param CreatetransactionDto $createtransactionDto
+     * @param int $transactionTypeId
+     * @return Transaction
+     */
     private function createTransactionModel(
         TransactionStatusEnum $status,
         CreateTransactionDto $createTransactionDto,
