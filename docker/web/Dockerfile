@@ -18,8 +18,6 @@ RUN apk update && \
     vim \
     ## nano: editor de textos
     nano \
-    ## php7-phpdbg: voltado para identificar e remover qualquer tipo de erro existente no código-fonte de um programa
-    php7-phpdbg \
     supervisor
 
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \ 

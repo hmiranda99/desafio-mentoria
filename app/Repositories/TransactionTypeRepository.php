@@ -2,12 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Enums\TransactionsTypesEnum;
 use App\Models\TransactionType;
 
 class TransactionTypeRepository
 {
-    public function getIdTransactionTypeByName(string $transactionType)
+    /**
+     * This method is responsible for getting the ID of the transaction type.
+     * @param string $transactionType
+     * @return int
+     */
+    public function getIdTransactionTypeByName(string $transactionType): int
     {
         $type = TransactionType::where('description', 'LIKE', '%' . $transactionType . '%')->first();
         return $type->id;

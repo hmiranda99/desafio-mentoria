@@ -26,14 +26,19 @@ class FinalTransactionEmailJob implements ShouldQueue
         //
     }
 
+    protected function buildBaseUrl(): string
+    {
+        return config('services.send-email-service.base_uri');
+    }
+
     /**
      * Execute the job.
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
-        $response = Http::get(env('URL_SEND_EMAIL'));
+        $response = Http::get($this->buildBaseUrl());
         $response = $response->json();
 
         if ($response['message'] != 'Success') {

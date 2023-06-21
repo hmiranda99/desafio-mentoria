@@ -10,7 +10,7 @@ class AccountRepository
     /**
      * This method gets account by user id.
      * @param  int $userId
-     * @return Response
+     * @return AccountDto
      */
     public function getAccountByUserId(int $userId): ?AccountDto
     {
@@ -21,13 +21,19 @@ class AccountRepository
     /**
      * This method deletes account by user id.
      * @param  int $userId
-     * @return Response
+     * @return bool
      */
     public function deleteAccountByUserId(int $userId): bool
     {
         return Account::where('user_id', 'LIKE', '%' . $userId . '%')->delete();
     }
 
+    /**
+     * This method update balance account by user id.
+     * @param  float $balance
+     * @param  int $userId
+     * @return bool
+     */
     public function updateBalanceAccount(float $balance, int $userId): bool
     {
         return Account::where('user_id', $userId)->update(['balance' => $balance]);

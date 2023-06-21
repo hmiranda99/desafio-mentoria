@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\HealthController;
-use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\Api\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +20,14 @@ use App\Http\Controllers\TransactionController;
     return $request->user();
 });*/
 
+//health
 Route::get('/check', [HealthController::class, 'check']);
-Route::post('/user', [UserController::class, 'createUser']);
+
+//user
 Route::get('/list/user/{id}', [UserController::class, 'getUser']);
-Route::delete('/delete/user/{id}', [UserController::class, 'deleteUser']);
+Route::post('/user', [UserController::class, 'createUser']);
 Route::put('/update/user/{id}', [UserController::class, 'updateUser']);
+Route::delete('/delete/user/{id}', [UserController::class, 'deleteUser']);
+
+//transaction
 Route::post('/transaction', [TransactionController::class, 'createTransaction']);

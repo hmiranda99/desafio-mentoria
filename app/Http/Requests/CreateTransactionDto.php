@@ -10,7 +10,6 @@ class CreateTransactionDto extends Data
     public int $payer;
     public int $payee;
     public string $type;
-    public ?string $transactionHash;
 
     public static function rules()
     {
@@ -18,7 +17,7 @@ class CreateTransactionDto extends Data
             'value' => 'required|numeric',
             'payer' => 'required|int|exists:users,id|different:payee',
             'payee' => 'required|int|exists:users,id',
-            'type' => ['required', 'regex:/^P2P$/']
+            'type' => ['required', 'regex:/^P2[PB]$/']
         ];
     }
 
@@ -39,7 +38,7 @@ class CreateTransactionDto extends Data
             'payee.exists' => 'Este recebedor não existe no banco de dados.',
             //type
             'type.required' => 'Tipo de transação é obrigatório.',
-            'type.regex' => 'Só fazemos transações do tipo P2P.'
+            'type.regex' => 'Só fazemos transações do tipo P2P ou P2B.'
         ];
     }
 }
