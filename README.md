@@ -86,7 +86,7 @@ Documentação JSON: [http://localhost:65080/docs](http://localhost:65080/api/do
 - docker exec -it desafio_php sh
 - migrate
 - seed
-
+- composer phpunit
 
 
 
