@@ -4,14 +4,14 @@ namespace Tests\Unit\Exceptions\UsersException;
 
 use Tests\TestCase;
 use Fig\Http\Message\StatusCodeInterface;
-use App\Exceptions\UsersExceptions\UserAlreadExistsException;
+use App\Exceptions\UsersExceptions\UserAlreadyExistsException;
 
 class UserAlreadyExistisExceptionTest extends TestCase
 {
     
     public function testReportException()
     {
-        $instance = new UserAlreadExistsException();
+        $instance = new UserAlreadyExistsException();
         $response = $instance->report();
 
         $this->assertFalse($response);
@@ -19,7 +19,7 @@ class UserAlreadyExistisExceptionTest extends TestCase
 
     public function testUserAlreadyExistisException()
     {
-        $instance = new UserAlreadExistsException();
+        $instance = new UserAlreadyExistsException();
 
         $message = response()->json(["error" => true, "message" => $instance::MSG_USER_ALREADY_EXISTS]);
 
@@ -28,7 +28,7 @@ class UserAlreadyExistisExceptionTest extends TestCase
         $this->assertNotEmpty($response);
         $this->assertIsObject($response);
         $this->assertEquals($message->content(), $response->getContent());
-        $this->assertInstanceOf(UserAlreadExistsException::class, $instance);   
+        $this->assertInstanceOf(UserAlreadyExistsException::class, $instance);
         $this->assertEquals(StatusCodeInterface::STATUS_CONFLICT, $response->getStatusCode());
     }
 }

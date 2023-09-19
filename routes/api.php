@@ -24,7 +24,7 @@ use App\Http\Controllers\Api\TransactionController;
 Route::get('/check', [HealthController::class, 'check']);
 
 //user
-Route::get('/list/user/{id}', [UserController::class, 'getUser']);
+Route::get('/user/{id}', [UserController::class, 'getUser']);
 Route::post('/user', [UserController::class, 'createUser']);
 Route::put('/update/user/{id}', [UserController::class, 'updateUser']);
 Route::delete('/delete/user/{id}', [UserController::class, 'deleteUser']);

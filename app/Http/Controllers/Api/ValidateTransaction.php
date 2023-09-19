@@ -13,20 +13,14 @@ use App\Exceptions\TransactionsExceptions\WrongTransactionTypeException;
 
 class ValidateTransaction
 {
-    protected $accountRepository;
-    protected $userRepository;
-
     public function __construct(
-        AccountRepository $accountRepository,
-        UserRepository $userRepository
+        protected AccountRepository $accountRepository,
+        protected UserRepository $userRepository
     ) {
-        $this->accountRepository = $accountRepository;
-        $this->userRepository = $userRepository;
     }
 
     /**
      * Start of validation.
-     * 
      * @param CreateTransactionDto $createTransactionDto
      * @return bool
      */
@@ -37,21 +31,25 @@ class ValidateTransaction
 
     /**
      * Checks if user has permission to transact, only consumers can.
-     * 
-     * @param float $transactionValue
-     * @param int $payer
+     * @param CreateTransactionDto $createTransactionDto
      * @return bool
+     * @throws InsufficientBalanceException
+     * @throws UserCannotTransactException
+     * @throws WrongTransactionTypeException
      */
     private function canTransact(CreateTransactionDto $createTransactionDto): bool
     {
         $userEntityPayer = $this->userRepository->getUserById($createTransactionDto->payer);
         $userEntityPayee = $this->userRepository->getUserById($createTransactionDto->payee);
 
-        if (!$userEntityPayer->user_entity == User::CONSUMER) {
+        if ($userEntityPayer->user_entity != User::CONSUMER) {
             throw new UserCannotTransactException();
         }
 
-        if ($userEntityPayee->user_entity == User::CONSUMER && $createTransactionDto->type == TransactionsTypesEnum::P2B) {
+        if (
+            $userEntityPayee->user_entity == User::CONSUMER &&
+            $createTransactionDto->type == TransactionsTypesEnum::P2B->value
+        ) {
             throw new WrongTransactionTypeException();
         }
 
@@ -60,11 +58,11 @@ class ValidateTransaction
 
     /**
      * Checks if the user has balance to transact.
-     * 
      * @param float $transactionValue
      * @param int $payer
      * @return bool
      * @return float
+     * @throws InsufficientBalanceException
      */
     private function haveBalanceToTransact(float $transactionValue, int $payer): bool
     {

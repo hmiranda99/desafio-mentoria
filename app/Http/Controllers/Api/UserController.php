@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\UsersExceptions\UserNotExistsException;
 use App\Helpers\UserHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,39 +13,27 @@ use App\Http\Resources\UserResource;
 use App\Repositories\UserRepository;
 use App\Repositories\AccountRepository;
 use Fig\Http\Message\StatusCodeInterface;
-use App\Exceptions\UsersExceptions\UserAlreadExistsException;
+use App\Exceptions\UsersExceptions\UserAlreadyExistsException;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class UserController extends Controller
 {
-    protected $userRepository;
-    protected $userDtoAdapter;
-    protected $userHelper;
-    protected $accountRepository;
-
     public function __construct(
-        UserRepository $userRepository,
-        UserDtoAdapter $userDtoAdapter,
-        UserHelper $userHelper,
-        AccountRepository $accountRepository
+        protected UserRepository $userRepository,
+        protected UserDtoAdapter $userDtoAdapter,
+        protected UserHelper $userHelper,
+        protected AccountRepository $accountRepository
     ) {
-        $this->userRepository = $userRepository;
-        $this->userDtoAdapter = $userDtoAdapter;
-        $this->userHelper = $userHelper;
-        $this->accountRepository = $accountRepository;
     }
-
 
     /**
      * This method creates a new user and an account for him.
-     * @param  CreateUserDto $createUserDto
+     * @param CreateUserDto $createUserDto
      * @return Response
+     * @throws UnknownProperties
      */
     public function createUser(CreateUserDto $createUserDto): Response
     {
-        if ($this->userRepository->getUserByEmail($createUserDto->email)) {
-            throw new UserAlreadExistsException();
-        }
-
         $createUserDto->user_entity = $this->userHelper->definesUserEntity($createUserDto->cnpj);
         $createUserDto->password = $this->userHelper->encryptPassword($createUserDto->password);
         $userDto = $this->userDtoAdapter->adapter($createUserDto, null, null);
@@ -59,8 +48,9 @@ class UserController extends Controller
 
     /**
      * This method gets a user by id.
-     * @param  int $userId
+     * @param int $userId
      * @return Response
+     * @throws UserNotExistsException
      */
     public function getUser(int $userId): Response
     {
@@ -73,8 +63,9 @@ class UserController extends Controller
 
     /**
      * This method deletes a user by id.
-     * @param  int $userId
+     * @param int $userId
      * @return Response
+     * @throws UserNotExistsException
      */
     public function deleteUser(int $userId): Response
     {
@@ -86,9 +77,10 @@ class UserController extends Controller
 
     /**
      * This method updates a user's data by id.
-     * @param  int $userId
-     * @param Request
+     * @param int $userId
+     * @param Request $request
      * @return Response
+     * @throws \Exception
      */
     public function updateUser(int $userId, Request $request): Response
     {

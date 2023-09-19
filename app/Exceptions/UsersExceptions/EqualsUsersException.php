@@ -4,6 +4,7 @@ namespace App\Exceptions\UsersExceptions;
 
 use Exception;
 use Fig\Http\Message\StatusCodeInterface;
+use Illuminate\Http\JsonResponse;
 
 class EqualsUsersException extends Exception
 {
@@ -13,7 +14,7 @@ class EqualsUsersException extends Exception
      * Report the exception.
      * @return bool|null
      */
-    public function report()
+    public function report(): ?bool
     {
         return false;
     }
@@ -21,10 +22,9 @@ class EqualsUsersException extends Exception
     /**
      * Render the exception into an HTTP response.
      * This method returns an error message for users that already exist in database.
-     * @param  \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function render()
+    public function render(): JsonResponse
     {
         return response()->json([
             "error" => true,

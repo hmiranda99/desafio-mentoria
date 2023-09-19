@@ -139,7 +139,7 @@ interface UserControllerDocumentation
      * @param int $userId
      * @return  Response
      * @OA\Get(
-     *     path="/api/list/user/{id}",
+     *     path="/api/user/{id}",
      *     summary="Get user by id.",
      *     description="This endpoint get user by your id.",
      *     tags={"Get user"},

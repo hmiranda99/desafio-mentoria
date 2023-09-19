@@ -4,13 +4,15 @@ namespace App\Repositories;
 
 use App\Models\Account;
 use App\Models\AccountDto;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class AccountRepository
 {
     /**
      * This method gets account by user id.
-     * @param  int $userId
-     * @return AccountDto
+     * @param int $userId
+     * @return AccountDto|null
+     * @throws UnknownProperties
      */
     public function getAccountByUserId(int $userId): ?AccountDto
     {

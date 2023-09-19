@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\ServicesExceptions\ServiceDownException;
 use App\Http\Controllers\Controller;
 use App\Services\Transactions\TransactionService;
 use App\Jobs\FinalTransactionEmailJob;
@@ -13,22 +14,19 @@ use Illuminate\Http\Response;
 
 class TransactionController extends Controller
 {
-    protected $transactionService;
-    protected $validateTransaction;
-
     public function __construct(
-        TransactionService $transactionService,
-        ValidateTransaction $validateTransaction
+        protected TransactionService $transactionService,
+        protected ValidateTransaction $validateTransaction
     ) {
-        $this->transactionService = $transactionService;
-        $this->validateTransaction = $validateTransaction;
     }
 
     /**
      * Create a transaction.
-     * 
+     *
      * @param CreateTransactionDto $createTransactionDto
      * @return Response
+     * @throws TransactionNotAuthorizedException
+     * @throws ServiceDownException
      */
     public function createTransaction(CreateTransactionDto $createTransactionDto): Response
     {

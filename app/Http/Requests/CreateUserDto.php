@@ -14,19 +14,19 @@ class CreateUserDto extends Data
     public ?string $cnpj;
     public ?string $cpf;
     public ?string $user_entity;
-    
-    public static function rules()
+
+    public static function rules(): array
     {
         return [
             'name' => 'required|string|min:2|max:80',
             'email' => 'required|unique:users|email:rfc,dns',
             'password' => 'required',
-            'cnpj' => ['unique:users', 'max:18', 'required_without:cpf', 'nullable', new CnpjUser],
-            'cpf' => ['unique:users', 'max:14', 'required_without:cnpj', 'nullable', new CpfUser],
+            'cnpj' => ['unique:users', 'max:18', 'required_without:cpf', 'nullable', new CnpjUser()],
+            'cpf' => ['unique:users', 'max:14', 'required_without:cnpj', 'nullable', new CpfUser()],
         ];
     }
-     
-    public static function messages()
+
+    public static function messages(): array
     {
         return [
             //nome

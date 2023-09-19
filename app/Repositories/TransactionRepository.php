@@ -8,17 +8,14 @@ use App\Http\Requests\CreateTransactionDto;
 
 class TransactionRepository
 {
-    protected $transactionTypeRepository;
-
-    public function __construct(TransactionTypeRepository $transactionTypeRepository)
+    public function __construct(protected TransactionTypeRepository $transactionTypeRepository)
     {
-        $this->transactionTypeRepository = $transactionTypeRepository;
     }
 
     /**
      * This method is responsible for preparing the data for insertion into the database.
      * @param TransactionStatusEnum $status
-     * @param CreatetransactionDto $createtransactionDto
+     * @param CreateTransactionDto $createTransactionDto
      * @return bool
      */
     public function registerTransaction(TransactionStatusEnum $status, CreateTransactionDto $createTransactionDto): bool
@@ -35,7 +32,7 @@ class TransactionRepository
     /**
      * This method is responsible for preparing the data for insertion into the database.
      * @param TransactionStatusEnum $status
-     * @param CreatetransactionDto $createtransactionDto
+     * @param CreateTransactionDto $createTransactionDto
      * @param int $transactionTypeId
      * @return Transaction
      */

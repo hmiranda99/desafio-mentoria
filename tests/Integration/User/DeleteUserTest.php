@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Integration;
+namespace Tests\Integration\User;
 
-use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class DeleteUserTest extends TestCase
 {

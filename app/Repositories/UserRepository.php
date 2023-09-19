@@ -5,20 +5,19 @@ namespace App\Repositories;
 use App\Helpers\AccountHelper;
 use App\Models\User;
 use App\Models\UserDto;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class UserRepository
 {
-    protected $accountHelper;
-    
-    public function __construct(AccountHelper $accountHelper)
+    public function __construct(protected AccountHelper $accountHelper)
     {
-        $this->accountHelper = $accountHelper;
     }
 
     /**
      * This method gets the user by email.
      * @param string $email
      * @return ?UserDto
+     * @throws UnknownProperties
      */
     public function getUserByEmail(string $email): ?UserDto
     {
@@ -30,6 +29,7 @@ class UserRepository
      * This method gets the user by email.
      * @param int $userId
      * @return ?UserDto
+     * @throws UnknownProperties
      */
     public function getUserById(int $userId): ?UserDto
     {
@@ -41,6 +41,7 @@ class UserRepository
      * This method inserts user data into the database.
      * @param UserDto $userDto
      * @return UserDto
+     * @throws UnknownProperties
      */
     public function createUser(UserDto $userDto): UserDto
     {
@@ -67,6 +68,7 @@ class UserRepository
      * @param UserDto $userDto
      * @param int $userId
      * @return bool
+     * @throws \Throwable
      */
     public function updateUser(UserDto $userDto, int $userId): bool
     {

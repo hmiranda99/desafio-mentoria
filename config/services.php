@@ -31,11 +31,11 @@ return [
     ],
 
     'authorizing-service' => [
-        'base_uri' => env('URL_AUTHORIZING_SERVICE', 'https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6'),
+        'base_uri' => env('URL_AUTHORIZING_SERVICE', 'https://run.mocky.io/v3/d6f2678a-96eb-493e-9722-26c487f65781'),
     ],
 
     'send-email-service' => [
-        'base_uri' => env('URL_SEND_EMAIL', 'http://o4d9z.mocklab.io/notify'),
+        'base_uri' => env('URL_SEND_EMAIL', 'https://run.mocky.io/v3/d6f2678a-96eb-493e-9722-26c487f65781'),
     ],
 
 ];

@@ -13,7 +13,7 @@ class CreateTransactionDtoTest extends TestCase
             'value' => 'required|numeric',
             'payer' => 'required|int|exists:users,id|different:payee',
             'payee' => 'required|int|exists:users,id',
-            'type' => ['required', 'regex:/^P2P$/']
+            'type' => ['required', 'regex:/^P2[PB]$/']
         ];
 
         $this->assertEquals($expectedRules, CreateTransactionDto::rules());
@@ -36,7 +36,7 @@ class CreateTransactionDtoTest extends TestCase
            'payee.exists' => 'Este recebedor não existe no banco de dados.',
            //type
            'type.required' => 'Tipo de transação é obrigatório.',
-           'type.regex' => 'Só fazemos transações do tipo P2P.'
+           'type.regex' => 'Só fazemos transações do tipo P2P ou P2B.'
         ];
 
         $this->assertEquals($expectedMessages, CreateTransactionDto::messages());

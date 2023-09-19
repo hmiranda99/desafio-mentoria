@@ -15,11 +15,8 @@ use App\Exceptions\UsersExceptions\UserNotExistsException;
 
 class UserHelper
 {
-    protected $userRepository;
-
-    public function __construct(UserRepository $userRepository)
+    public function __construct(protected UserRepository $userRepository)
     {
-        $this->userRepository = $userRepository;
     }
 
     /**
@@ -68,7 +65,7 @@ class UserHelper
                 'max:14',
                 'required_without:cnpj',
                 'nullable',
-                Rule::unique('users')->ignore($userDto->id), 
+                Rule::unique('users')->ignore($userDto->id),
                 new CpfUser
             ]
         ]);
