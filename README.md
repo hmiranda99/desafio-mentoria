@@ -53,6 +53,7 @@ Para esse desafio foi desenvolvida uma API escalável que tem como objetivo real
 <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
 <img src="https://img.shields.io/badge/RabbitMQ 3.7-FF6600.svg?style=for-the-badge&logo=RabbitMQ&logoColor=white">
 supervisord
+sonar clod
 </div>
 
 ##
@@ -88,5 +89,7 @@ Documentação JSON: [http://localhost:65080/docs](http://localhost:65080/api/do
 - seed
 - composer phpunit
 
-
+### melhorias
+- logs para monitoramento
+- interfaces entre camadas
 
