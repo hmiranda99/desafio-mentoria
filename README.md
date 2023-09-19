@@ -78,3 +78,15 @@ Documentação JSON: [http://localhost:65080/docs](http://localhost:65080/api/do
 - [x] Swagger <br>
 - [x] PHPCs <br>
 - [x] PHPUnit <br>
+
+
+### rodar
+- docker-compose up -d
+- docker-compose ps
+- docker exec -it desafio_php sh
+- migrate
+- seed
+
+
+
+
