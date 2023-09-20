@@ -8,7 +8,6 @@ use App\Models\Account;
 use App\Models\TransactionType;
 use App\Models\User;
 use App\Services\AuthorizingService\AuthorizingService;
-use Application\Repository\SellerFeeBatchItemRepositoryInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
@@ -19,7 +18,7 @@ class CreateTransactionTest extends TestCase
 {
     use DatabaseMigrations;
 
-    private $authorizingService;
+    private AuthorizingService $authorizingService;
 
     public function setUp(): void
     {
