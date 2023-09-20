@@ -52,9 +52,9 @@ Para esse desafio foi desenvolvida uma API escalável que tem como objetivo real
 <img src="https://img.shields.io/badge/Nginx 1.21.6-009639?style=for-the-badge&logo=nginx&logoColor=white">
 <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
 <img src="https://img.shields.io/badge/RabbitMQ 3.7-FF6600.svg?style=for-the-badge&logo=RabbitMQ&logoColor=white">
-supervisord
-sonar cloud
-git hub actions
+<img src="https://img.shields.io/badge/supervisor-004088.svg?style=for-the-badge">
+<img src="https://img.shields.io/badge/SonarCloud-F3702A.svg?style=for-the-badge&logo=SonarCloud&logoColor=white">
+<img src="https://img.shields.io/badge/GitHub%20Actions-2088FF.svg?style=for-the-badge&logo=GitHub-Actions&logoColor=white">
 </div>
 
 ##
@@ -67,34 +67,68 @@ git hub actions
 </div>
   
 ##
+### 🔗 URLs importantes
+🫀 Health check: [http://localhost:65080/health](http://localhost:65080/health) <br>
+📖 Documentação: [http://localhost:65080/api/documentation](http://localhost:65080/api/documentation) <br>
+:shipit: Documentação JSON: [http://localhost:65080/docs](http://localhost:65080/api/documentation) <br>
+🐰 RabitMQ: [http://localhost:15672](http://localhost:15672)
 
-### 👨🏻‍💻 Primeiros passos
-
-#### URLs importantes
-Health check: [http://localhost:65080/health](http://localhost:65080/health) <br>
-Documentação: [http://localhost:65080/api/documentation](http://localhost:65080/api/documentation) <br>
-Documentação JSON: [http://localhost:65080/docs](http://localhost:65080/api/documentation) <br>
-
-### Libs
+##
+### 📚 Libs
 - [x] Health check <br>
 - [x] Swagger <br>
 - [x] PHPCs <br>
 - [x] PHPUnit <br>
 
+##
+### 👨🏻‍💻 Primeiros passos
 
-### rodar
-- docker-compose up -d
-- docker-compose ps
-- docker exec -it desafio_php sh
-- migrate
-- seed
-- composer phpunit
+Para subir o container
+```
+docker-compose up -d
+```
+Ver se os cantainers estão de pé
+```
+docker-compose ps
+```
+Entrar no container
+```
+docker exec -it desafio_php sh
+```
+Rodar as migrations
+```
+php artisan migrate
+```
+Rodar os seeders
+```
+php artisan db:seed
+```
 
-### melhorias
-- logs para monitoramento
-- interfaces entre camadas
+##
+### 🐰 RabitMQ
+URL
+```
+http://localhost:15672
+```
+Username e Password
+```
+guest
+```
 
-### rabitmq
-- http://localhost:15672/
-- username : guest
-- passqord: guest
+##
+### 🧪 Testes
+```
+composer phpunit
+```
+
+##
+### :construction: Gerar Swagger
+```
+php artisan l5-swagger:generate
+```
+
+##
+### :bowtie: Melhorias de projeto
+- Logs para monitoramento
+- Interfaces entre camadas
+
