@@ -53,7 +53,8 @@ Para esse desafio foi desenvolvida uma API escalável que tem como objetivo real
 <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
 <img src="https://img.shields.io/badge/RabbitMQ 3.7-FF6600.svg?style=for-the-badge&logo=RabbitMQ&logoColor=white">
 supervisord
-sonar clod
+sonar cloud
+git hub actions
 </div>
 
 ##
