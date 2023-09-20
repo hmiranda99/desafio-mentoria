@@ -94,3 +94,7 @@ Documentação JSON: [http://localhost:65080/docs](http://localhost:65080/api/do
 - logs para monitoramento
 - interfaces entre camadas
 
+### rabitmq
+- http://localhost:15672/
+- username : guest
+- passqord: guest
