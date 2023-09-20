@@ -29,8 +29,16 @@
 
   [Sobre](#--sobre-o-desafio) <br>
   [Skills necessárias](#-skills-necessárias) <br>
+  [Regras](#%EF%B8%8F-regras-do-desafio) <br>
   [Modelagem de dados](#-modelagem-de-dados) <br>
+  [Fluxograma](#-fluxograma) <br>
+  [URLs Importantes](#-urls-importantes) <br>
+  [Libis](#-libs) <br>
   [Primeiros passos](#-primeiros-passos) <br>
+  [RabitMQ](#-rabitmq) <br>
+  [Testes](#-testes) <br>
+  [Gerar Swagger](#construction-gerar-swaggers) <br>
+  [Melhorias](#bowtie-melhorias-de-projeto) <br>
 
 </details>
 </h3>
