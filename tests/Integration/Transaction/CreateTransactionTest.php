@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Services\AuthorizingService\AuthorizingService;
 use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 use Tests\Unit\Models\AccountDtoFactory;
 use Tests\Unit\Models\CreateTransactionDtoFactory;
@@ -30,6 +31,7 @@ class CreateTransactionTest extends TestCase
     {
         $createTransactionDto = $this->createBaseTransaction(TransactionsTypesEnum::P2B->value);
         $this->mockAuthorizingService(StatusCodeInterface::STATUS_OK);
+        Queue::fake();
         $response = $this->post('api/transaction', $createTransactionDto->toArray());
         $response->assertStatus(StatusCodeInterface::STATUS_CREATED);
     }
