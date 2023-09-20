@@ -4,8 +4,9 @@ namespace App\Exceptions\UsersExceptions;
 
 use Exception;
 use Fig\Http\Message\StatusCodeInterface;
+use Illuminate\Http\JsonResponse;
 
-class UserAlreadExistsException extends Exception
+class UserAlreadyExistsException extends Exception
 {
     public const MSG_USER_ALREADY_EXISTS = 'User already exists.';
 
@@ -13,7 +14,7 @@ class UserAlreadExistsException extends Exception
      * Report the exception.
      * @return bool|null
      */
-    public function report()
+    public function report(): ?bool
     {
         return false;
     }
@@ -21,10 +22,9 @@ class UserAlreadExistsException extends Exception
     /**
      * Render the exception into an HTTP response.
      * This method returns an error message for users that already exist in database.
-     * @param  \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function render()
+    public function render(): JsonResponse
     {
         return response()->json([
             "error" => true,

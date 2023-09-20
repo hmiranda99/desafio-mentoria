@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class AuthorizingService
 {
-    private $url;
+    private string $url;
 
     public function __construct()
     {

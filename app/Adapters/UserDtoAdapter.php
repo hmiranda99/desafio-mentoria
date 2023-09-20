@@ -3,14 +3,17 @@
 namespace App\Adapters;
 
 use App\Models\UserDto;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class UserDtoAdapter
 {
     /**
      * This method converts arrays and objects to the format UserDto.
-     * @param object $dataUserObject
-     * @param array $dataUserArray
+     * @param object|null $dataUserObject
+     * @param array|null $dataUserArray
+     * @param int|null $userId
      * @return UserDto
+     * @throws UnknownProperties
      */
     public function adapter(?object $dataUserObject, ?array $dataUserArray, ?int $userId): UserDto
     {

@@ -78,14 +78,14 @@
                 }
             }
         },
-        "/api/list/user/{id}": {
+        "/api/user/{id}": {
             "get": {
                 "tags": [
                     "Get user"
                 ],
                 "summary": "Get user by id.",
                 "description": "This endpoint get user by your id.",
-                "operationId": "46d90244879d24365724ea2d09bfcf75",
+                "operationId": "bb7fad78c18d5d880ab6ae81aea8ccf6",
                 "parameters": [
                     {
                         "name": "id",

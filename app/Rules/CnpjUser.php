@@ -32,7 +32,6 @@ class CnpjUser implements Rule
         if (strlen($c) != 14) {
             return false;
         } elseif (preg_match("/^{$c[0]}{14}$/", $c) > 0) {
-
             return false;
         }
 
@@ -56,7 +55,7 @@ class CnpjUser implements Rule
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return 'Não é um CNPJ válido, digite novamente';
     }

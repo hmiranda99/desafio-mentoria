@@ -51,7 +51,7 @@ class CpfUser implements Rule
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return 'Não é um CPF válido, digite novamente.';
     }

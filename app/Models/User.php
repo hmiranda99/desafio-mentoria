@@ -24,7 +24,7 @@ class User extends Model
     public const CONSUMER = 'consumer';
     public const SELLER = 'seller';
 
-    public function account()
+    public function account(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Account::class);
     }

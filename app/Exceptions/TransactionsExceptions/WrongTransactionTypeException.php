@@ -7,7 +7,7 @@ use Fig\Http\Message\StatusCodeInterface;
 
 class WrongTransactionTypeException extends Exception
 {
-    public const MSG_WRONG_TRANSACTION_TYPE = 'Transaction not authorized.';
+    public const MSG_WRONG_TRANSACTION_TYPE = 'Incorrect transaction type.';
 
     /**
      * Report the exception.

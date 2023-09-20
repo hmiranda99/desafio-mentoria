@@ -15,27 +15,18 @@ use App\Exceptions\ServicesExceptions\ServiceDownException;
 
 class TransactionService
 {
-    protected $accountRepository;
-    protected $authorizingService;
-    protected $transactionHelper;
-    protected $transactionRepository;
-
     public function __construct(
-        AccountRepository $accountRepository,
-        AuthorizingService $authorizingService,
-        TransactionHelper $transactionHelper,
-        TransactionRepository $transactionRepository
+        protected AccountRepository $accountRepository,
+        protected AuthorizingService $authorizingService,
+        protected TransactionHelper $transactionHelper,
+        protected TransactionRepository $transactionRepository
     ) {
-        $this->accountRepository = $accountRepository;
-        $this->authorizingService = $authorizingService;
-        $this->transactionHelper = $transactionHelper;
-        $this->transactionRepository = $transactionRepository;
     }
 
     /**
      * Consult the authorizing service.
-     * 
      * @return bool
+     * @throws ServiceDownException
      */
     public function authorizeServiceProvider(): bool
     {
@@ -45,8 +36,7 @@ class TransactionService
 
     /**
      * Cancel the transaction in the database.
-     * 
-     * @param CreateTransactionDto $createtransactionDto
+     * @param CreateTransactionDto $createTransactionDto
      * @return bool
      */
     public function cancelTransaction(CreateTransactionDto $createTransactionDto): bool
@@ -56,7 +46,6 @@ class TransactionService
 
     /**
      * Authorizes the transaction in the database.
-     * 
      * @param CreateTransactionDto $createTransactionDto
      * @return bool
      */
@@ -65,10 +54,9 @@ class TransactionService
         $this->prepareUsersBalance($createTransactionDto);
         return $this->transactionRepository->registerTransaction(TransactionStatusEnum::AUT, $createTransactionDto);
     }
-    
+
     /**
      * Starts the calculation for the new balance of the payer and receiver.
-     * 
      * @param CreateTransactionDto $createTransactionDto
      * @return void
      */
@@ -89,24 +77,23 @@ class TransactionService
 
     /**
      * Update payer and payee new balance.
-     * 
      * @param int $user
      * @param int $transactionValue
      * @param OperationEnum $operation
-     * @return bool
+     * @return void
      */
-    private function updateUsersBalance(int $user, int $transactionValue, OperationEnum $operation): bool
+    private function updateUsersBalance(int $user, int $transactionValue, OperationEnum $operation): void
     {
         $account = $this->accountRepository->getAccountByUserId($user);
         $newBalance = $this->transactionHelper->withdrawOrAddBalance($operation, $account->balance, $transactionValue);
-        return $this->accountRepository->updateBalanceAccount($newBalance, $user);
+        $this->accountRepository->updateBalanceAccount($newBalance, $user);
     }
 
     /**
      * Checks the status code of the authorizing service.
-     * 
      * @param int $statusCode
      * @return bool
+     * @throws ServiceDownException
      */
     private function checkAuthorizerServiceProvider(int $statusCode): bool
     {
@@ -114,10 +101,7 @@ class TransactionService
             return throw new ServiceDownException();
         }
 
-        if (
-            $statusCode != StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR &&
-            $statusCode != StatusCodeInterface::STATUS_OK
-        ) {
+        if ($statusCode != StatusCodeInterface::STATUS_OK) {
             return false;
         }
 

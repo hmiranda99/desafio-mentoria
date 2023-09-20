@@ -11,7 +11,7 @@ class CreateTransactionDto extends Data
     public int $payee;
     public string $type;
 
-    public static function rules()
+    public static function rules(): array
     {
         return [
             'value' => 'required|numeric',
@@ -21,7 +21,7 @@ class CreateTransactionDto extends Data
         ];
     }
 
-    public static function messages()
+    public static function messages(): array
     {
         return [
             //value

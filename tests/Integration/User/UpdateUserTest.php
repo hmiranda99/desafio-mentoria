@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Integration;
+namespace Tests\Integration\User;
 
-use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Http\Request;
+use Tests\TestCase;
 use Tests\Unit\Models\UserDtoFactory;
 
 class UpdateUserTest extends TestCase
