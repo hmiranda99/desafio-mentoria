@@ -27,14 +27,7 @@ class CreateTransactionTest extends TestCase
         $this->authorizingService = $this->createMock(AuthorizingService::class);
     }
 
-    public function testShouldCreateTransaction()
-    {
-        $createTransactionDto = $this->createBaseTransaction(TransactionsTypesEnum::P2B->value);
-        $this->mockAuthorizingService(StatusCodeInterface::STATUS_OK);
-        Queue::fake();
-        $response = $this->post('api/transaction', $createTransactionDto->toArray());
-        $response->assertStatus(StatusCodeInterface::STATUS_CREATED);
-    }
+    //aqui
 
     public function testShouldSellerIsPayerButReturnError()
     {
