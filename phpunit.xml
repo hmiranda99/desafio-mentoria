@@ -18,9 +18,6 @@
             <directory suffix=".php">./app</directory>
         </include>
         <exclude>
-            <directory suffix=".php">./app/Http/Middleware</directory>
-            <directory suffix=".php">./app/Http/Middleware/Authenticate.php</directory>
-            <directory suffix=".php">./app/Http/Middleware/TrustHosts.php</directory>
             <directory suffix=".php">./app/Providers</directory>
             <directory suffix=".php">./app/Console</directory>
         </exclude>
