@@ -10,14 +10,14 @@ class AuthorizingServiceTest extends TestCase
 {
     public function testGetAuthorizer()
     {
-        $url = 'https://exemplo.com/api/mock';
+        config(['services.authorizing-service.base_uri' => 'http://example.com']);
+        $authorizingService = new AuthorizingService();
 
         Http::fake([
-            $url => Http::response([], 200)
+            'http://example.com' => Http::response('', 200)
         ]);
 
-        $authorizingService = new AuthorizingService($url);
-        $statusCode = $authorizingService->getAuthorizer();
-        $this->assertEquals(200, $statusCode);
+        $status = $authorizingService->getAuthorizer();
+        $this->assertEquals(200, $status);
     }
 }
