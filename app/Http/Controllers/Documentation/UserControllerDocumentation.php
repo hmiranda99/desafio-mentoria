@@ -104,7 +104,7 @@ use App\Http\Requests\CreateUserDto;
  *                  type="float"
  *              )
  *          )
- *      )       
+ *      )
  * )
  */
 
