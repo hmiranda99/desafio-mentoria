@@ -49,10 +49,11 @@ class TransactionService
      * @param CreateTransactionDto $createTransactionDto
      * @return bool
      */
-    public function authorizeTransaction(CreateTransactionDto $createTransactionDto): bool
+    public function authorizeTransaction(CreateTransactionDto $createTransactionDto): CreateTransactionDto
     {
         $this->prepareUsersBalance($createTransactionDto);
-        return $this->transactionRepository->registerTransaction(TransactionStatusEnum::AUT, $createTransactionDto);
+        $this->transactionRepository->registerTransaction(TransactionStatusEnum::AUT, $createTransactionDto);
+        return $createTransactionDto;
     }
 
     /**

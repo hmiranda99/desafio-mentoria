@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\ServicesExceptions\ServiceDownException;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TransactionResource;
 use App\Services\Transactions\TransactionService;
 use App\Jobs\FinalTransactionEmailJob;
 use Fig\Http\Message\StatusCodeInterface;
@@ -37,10 +38,10 @@ class TransactionController extends Controller
             throw new TransactionNotAuthorizedException();
         }
 
-        $this->transactionService->authorizeTransaction($createTransactionDto);
+        $response = $this->transactionService->authorizeTransaction($createTransactionDto);
 
         FinalTransactionEmailJob::dispatch();
 
-        return response(null, StatusCodeInterface::STATUS_CREATED);
+        return response(new TransactionResource($response), StatusCodeInterface::STATUS_CREATED);
     }
 }
